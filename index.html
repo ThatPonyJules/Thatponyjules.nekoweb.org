@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Please Enjoy Your Stay!</title>
+		<link href="/style.css" rel="stylesheet" type="text/css" media="all" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/site.webmanifest" />
+		<style>
+			.cbt {
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  color: white;
+			  text-align: center;
+			  font-family: 'DTM', sans-serif;
+			}
+
+			   .fade-in {
+			     opacity: 0;
+			     transform: translateY(-20px); /* start slightly above */
+			     animation: fadeInMove 0.1s ease-in-out forwards;
+			   }
+			   .fade-ibs {
+			     opacity: 0;
+			     transform: translateY(-20px); /* start slightly above */
+			     animation: fadeInMont 2s ease-in-out forwards;
+			   }
+
+			   @keyframes fadeInMove {
+			     0% {
+			       opacity: 1;
+			       transform: translateY(-20); /* move from top */
+			     }
+			     100% {
+			       opacity: 0;
+			       transform: translateY(0); /* settle in place */
+			     }
+			   }
+
+			   @keyframes fadeInMont {
+			     0% {
+			       opacity: 0;
+			       transform: translateY(-20); /* move from top */
+			     }
+			     99% {
+			       opacity: 0;
+			       transform: translateY(0); /* settle in place */
+			     }
+			     100% {
+			       opacity: 1;
+			       transform: translateY(0); /* settle in place */
+			     }
+			   }
+
+			.center-content {
+			  display: flex;
+			  flex-direction: column;
+			  align-items: center;
+			}
+
+			.text-with-gif {
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			  gap: 5px; /* space between text and gif */
+			}
+		</style>
+	</head>
+
+	<body
+		style="background-color: #000;
+			  background-image: url();
+			  margin: 0;
+			  height: 100vh;"
+	>
+		<br />
+		<br />
+		<br />
+		<p
+			class="center-content fade-ibs"
+			style="font-family:'DTM',sans-serif;"
+		>
+			If the redirect didnt work, click
+			<a
+				href="Disclaimer"
+				style="font-family:'DTM',sans-serif;font-size:25px;"
+			>
+				<u>here</u>
+			</a>
+			to be taken to the Disclaimer
+		</p>
+		<div class="center-content cbt">
+			<div class="fade-in">
+				<h1>Meowdy Meowdy!</h1>
+				<p>This site was made with a 1920x1080p monitor on Firefox!</p>
+			</div>
+
+			<div class="fade-in">
+				<div class="text-with-gif">
+					<p>if it doesnt work</p>
+					<img
+						class="fade-in"
+						src="FUCK.gif"
+						height="30px"
+						alt="FUCK gif"
+					/>
+				</div>
+			</div>
+			<div class="fade-in">
+				<a href="Home" style="font-family:'DTM',sans-serif;">
+					<p>Click here to continue</p>
+				</a>
+			</div>
+		</div>
+		<script>
+			const max = 9; // For a range from 0 to 9
+			const Num = Math.floor(Math.random() * max);
+			const max_2 = 99; // For a range from 0 to 9
+			const Num_2 = Math.floor(Math.random() * max_2);
+			console.log(Num);
+			console.log(Num_2);
+			if (Num == 0) {
+				console.log("hit")
+				window.location.replace(`https://thatponyjules.nekoweb.org/DisclaimerMark
+				`);
+			}
+			// else if (Num_2 == 0) {
+			// 	console.log("DINGDINGDING")
+			// 	window.location.replace(`https://thatponyjules.nekoweb.org/DisclaimerSecret`);
+			// }
+			else {
+				console.log("miss")
+				window.location.replace(`https://thatponyjules.nekoweb.org/Disclaimer`);
+			}
+			// window.location.replace(ABC);
+		</script>
+	</body>
+</html>

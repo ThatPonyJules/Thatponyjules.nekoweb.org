@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>The jQuery Example</title>
+		<script
+			type="text/javascript"
+			src="https://www.tutorialspoint.com/jquery/jquery-3.6.0.js"
+		></script>
+
+		<script
+			type="text/javascript"
+			src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"
+		></script>
+
+		<script type="text/javascript" language="javascript">
+
+			$(document).ready(function() {
+			   $("#show").click(function(){
+			      $(".overlay").show( "explode", easeOutCirc, {pieces: 16}, 2000 );
+			   });
+
+			});
+		</script>
+
+		<style>
+			div{width:50%; height:50%; background:black;}
+		</style>
+	</head>
+
+	<body>
+		<p>Click on any of the buttons</p>
+
+		<button id="hide">Hide</button>
+		<button id="show">Show</button>
+
+		<div class="overlay">
+			<p>this is a test</p>
+			<img src="assets/placeholder.png" />
+		</div>
+		<script>
+			function on() {
+				$(".overlay").effect({
+					effect: "explode",
+					easing: "easeOutCirc",
+					pieces: 12,
+					duration: 1000
+				});
+			}
+			const myTimeout = setTimeout(on, 1000);
+				      $( document ).ready(function() {
+
+				});
+		</script>
+	</body>
+</html>

@@ -1,0 +1,60 @@
+@font-face {
+	font-family: Frag-Mono;
+	src: url(https://thatponyjules.nekoweb.org/FragmentMono-Regular.ttf);
+}
+
+.site-box {
+	background-image: url(//thatponyjules.nekoweb.org/Jules/2025%20SparkleCur%20Jules%20AF.png);
+	border-radius: 15px;
+	border: 5px inset #827dff;
+	background-position: center;
+	background-size: cover;
+	filter: contrast(75%) sepia(100%) saturate(300%) hue-rotate(-150deg);
+	text-shadow: 0 0 7px rgb(94, 0, 172);
+	transform: translateX(-7px) translateY(-5px) scale(0.85) rotate(1deg);
+	transition: filter 0.2s;
+	transition: transform 0.2s;
+}
+
+.site-box:hover {
+	transform: translateX(-7px) translateY(-5px) scale(0.9) rotate(-2deg);
+	filter: none;
+}
+
+.site-box > a > p {
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	color: #1b0257;
+	font-size: 14px;
+	bottom: 10px;
+}
+.site-box > a > span {
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	color: #4dff74;
+	font-weight: bold;
+	font-size: 12px;
+	text-shadow: 0 0 5px #54b968;
+	bottom: 10px;
+}
+
+.site-box::before {
+	content: url(//thatponyjules.nekoweb.org/TPJ%20LOGO.png);
+	scale: 15%;
+	position: absolute;
+	top: -300px;
+	width: 150px;
+	right: 60px;
+}
+
+.site-box .follow {
+	color: #521066;
+	height: auto;
+}
+
+.site-box .sitefeature {
+	visibility: hidden;
+}
+
+.post-box {
+	color: white;
+	background-color: black;
+}

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Disclaimer</title>
+		<link href="/style.css" rel="stylesheet" type="text/css" media="all" />
+		<style>
+			body {
+			  background-color: #000;
+			  background-image: url();
+			  margin: 0;
+			  height: 100vh;
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  color: white;
+			  text-align: center;
+			  font-family: 'DTM', sans-serif;
+
+			}
+
+			   .fade-in {
+			     opacity: 0;
+			     transform: translateY(-20px); /* start slightly above */
+			     animation: fadeInMove 2s ease-in-out forwards;
+			   }
+			   .fade-in-fuck {
+			     opacity: 0;
+			     transform: translateY(-20px); /* start slightly above */
+			     animation: fadeInMove 7s ease-in-out forwards;
+			   }
+			.fade-in.delay {
+			  animation-delay: 1s;
+			}
+			.fade-in.delay2 {
+			  animation-delay: 3s;
+			}
+
+			   @keyframes fadeInMove {
+			     0% {
+			       opacity: 0;
+			       transform: translateY(-20px); /* move from top */
+			     }
+			     100% {
+			       opacity: 1;
+			       transform: translateY(0); /* settle in place */
+			     }
+			   }
+
+			.center-content {
+			  display: flex;
+			  flex-direction: column;
+			  align-items: center;
+			}
+
+			.text-with-gif {
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			  gap: 5px; /* space between text and gif */
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="center-content">
+			<div class="fade-in easedown">
+				<h1>Meowdy Meowdy!</h1>
+				<p>This site was made with a 1920x1080p monitor on Firefox!</p>
+				<p>Please keep in mind that this site is NOT mobile friendly</p>
+			</div>
+
+			<div class="fade-in delay">
+				<div class="text-with-gif">
+					<p>if it doesnt work</p>
+					<img
+						class="fade-in-fuck delay"
+						src="FUCK.gif"
+						height="30px"
+						alt="FUCK gif"
+					/>
+				</div>
+			</div>
+			<div class="fade-in delay2">
+				<a href="Home" style="font-family:'DTM',sans-serif;">
+					<p>Click here to continue</p>
+				</a>
+			</div>
+		</div>
+	</body>
+</html>

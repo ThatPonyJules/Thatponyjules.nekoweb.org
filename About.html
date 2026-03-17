@@ -1,0 +1,1328 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="topbar.js"></script>
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/site.webmanifest" />
+		<style>
+			#grouping {
+			  display: grid;
+			  grid-template-columns: minmax(360px, 40%) 1fr;
+			  /* left column capped at ~36% */
+			  gap: 1%;
+			  /* positive gap — negative gaps cause weird overlap */
+			  align-items: start;
+			  box-sizing: border-box;
+			}
+
+			/* If you have inner #grouped padding, keep it but don't let it expand grid */
+			#grouped {
+			  padding: 10px;
+			  box-sizing: border-box;
+			}
+
+			.scroll-container {
+			  width: 100%;
+			  overflow: hidden;
+			  /* prevents layout stretch */
+			  position: relative;
+			}
+
+			.scroll-wrapper {
+			  width: 100%;
+			  overflow: hidden;
+			  /* contains the long inner div */
+			  position: fixed;
+			}
+
+			.scroll-content {
+			  width: max-content;
+			  /* only as wide as content itself */
+			  animation: scroll 30s linear infinite;
+			  will-change: transform;
+			  /* smoother animation */
+			}
+
+			.scroll-content img {
+			  width: 88px;
+			  height: auto;
+			  margin-right: 16px;
+			  flex-shrink: 0;
+			  object-fit: cover;
+			  border-radius: 10px;
+			}
+
+			/* keyframes for smooth infinite scroll */
+			@keyframes scroll {
+			  from {
+			    transform: translateX(0);
+			  }
+
+			  to {
+			    transform: translateX(-50%);
+			  }
+			}
+
+			.fade-edges {
+			  -webkit-mask-image: -webkit-linear-gradient(left, transparent, black 10%, black 90%, transparent);
+			  mask-image: -moz-linear-gradient(left, transparent, black 10%, black 90%, transparent);
+			  mask-image: -o-linear-gradient(left, transparent, black 10%, black 90%, transparent);
+			  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+			}
+
+			.grow {
+			  transition: transform 0.2s;
+			}
+
+			.grow:hover {
+			  transform: scale(1.1);
+			}
+
+			/* last fm scroll shit start */
+			.playing-wrapper {
+			  display: flex;
+			  align-items: center;
+			  gap: 12px;
+			}
+
+			.playing-cover {
+			  width: 40%;
+			  object-fit: cover;
+			  flex-shrink: 0;
+			  border-radius: 6px;
+			}
+
+			/* text container next to image */
+			.playing-trackInfo {
+			  display: flex;
+			  flex-direction: column;
+			  justify-content: center;
+			  gap: 6px;
+			  flex: 1 1 auto;
+			  /* allow shrinking & growing within parent */
+			  min-width: 0;
+			  /* prevent overflow expansion */
+			  max-width: 100%;
+			  /* cap to container width */
+			  overflow: hidden;
+			  /* keep content inside bounds */
+			}
+
+			/* scrolling wrapper*/
+			.playing-marquee {
+			  position: relative;
+			  overflow: hidden;
+			  white-space: nowrap;
+			  display: block;
+			  width: 100%;
+			  /* ensure marquee stays within container*/
+			  box-sizing: border-box;
+			}
+
+			/* text that actually moves*/
+			.playing-marquee__inner {
+			  display: inline-block;
+			  white-space: nowrap;
+			  will-change: transform;
+			}
+			/*.playing-marquee {
+			  overflow: hidden;
+			  width: 100%;
+			}
+
+			.playing-marquee__track {
+			  display: flex;
+			  flex-wrap: nowrap;
+			  width: max-content;
+			  white-space: nowrap;
+			  will-change: transform;
+			  animation: marquee linear infinite;
+			}
+
+			.playing-marquee__item {
+			  flex-shrink: 0;
+			  padding-right: 2rem; /* gap between loops
+			}
+
+			@keyframes marquee {
+			  from {
+			    transform: translateX(0);
+			  }
+			  to {
+			    transform: translateX(-50%);
+			  }
+			}
+			*/
+
+
+			/* track + artist styles */
+			.playing-trackName,
+			.playing-artistName {
+			  margin: 0;
+			  padding: 0;
+			  display: inline-block;
+			  font-weight: 600;
+			  letter-spacing: 0.03em;
+			  overflow: hidden;
+			  text-overflow: ellipsis;
+			}
+
+			.playing-artistName {
+			  font-weight: 400;
+			  opacity: 0.8;
+			}
+
+			/* last fm scroll shit end */
+		</style>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>ThatPonyJules</title>
+
+		<link href="/style.css" rel="stylesheet" type="text/css" media="all" />
+	</head>
+
+	<body>
+		<style>
+				.splash-container {
+				position: relative;
+			}
+			.splash-bg {
+				display: block;
+				width: 75%;
+				height: auto;
+			}
+
+			/* Splash text styling */
+			.splash-text {
+				position: absolute;
+				bottom: 10%;
+				right: 25%;
+				transform-origin: center center;
+				transform: translate(50%, 50%) rotate(-7deg);
+				font-size: 1.1rem;
+				animation: pulse 2s infinite ease-in-out;
+				font-weight: bold;
+				pointer-events: none;
+				/* prevent blocking clicks on image */
+			}
+			/* Grow/shrink animation */
+			@keyframes pulse {
+				0%,
+				100% {
+					transform: translate(50%, 50%) rotate(-7deg) scale(1);
+				}
+				50% {
+					transform: translate(50%, 50%) rotate(-7deg) scale(1.1);
+				}
+			}
+		</style>
+		<div class="bottom">
+			<div
+				class="top-bar bottom"
+				style="display: flex; justify-content: flex-end"
+			>
+				<span style="text-align:right">
+					<p>
+						<a href="/About">About</a>
+						<a href="/Music">Music</a>
+					</p>
+				</span>
+				<div class="dropdown">
+					<div id="hitboxidfk">
+						<button class="dropbtn" id="buttocks">[+]</button>
+						<div
+							class="dropdown-content"
+							id="drop"
+							style="display:none"
+						>
+							<a href="/Julessitedotnet">Julessite</a>
+							<a href="/OCS">OCs</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div>
+				<div class="main-seg">
+					<center>
+						<div class="splash-container">
+							<a href="/Home">
+								<img
+									src="/TPJ LOGO.png"
+									alt="Background"
+									class="splash-bg"
+								/>
+							</a>
+							<div id="splash" class="splash-text"></div>
+						</div>
+					</center>
+				</div>
+			</div>
+		</div>
+		<script
+			type="text/javascript"
+			src="https://panzi.github.io/Browser-Ponies/basecfg.js"
+			id="browser-ponies-config"
+		></script>
+		<script
+			type="text/javascript"
+			src="https://panzi.github.io/Browser-Ponies/browserponies.js"
+			id="browser-ponies-script"
+		></script>
+		<script type="text/javascript">
+			/* <![CDATA[ */ (function (cfg) {BrowserPonies.setBaseUrl(cfg.baseurl);BrowserPonies.loadConfig(BrowserPoniesBaseConfig);BrowserPonies.loadConfig(cfg);})({"baseurl":"https://panzi.github.io/Browser-Ponies/","fadeDuration":500,"volume":1,"fps":25,"speed":3,"audioEnabled":false,"dontSpeak":true,"showFps":false,"showLoadProgress":true,"speakProbability":0.1,"spawn":{"fluttershy":1,"princess luna":1,"rainbow dash":1,"twilight sparkle":1},"autostart":true}); /* ]]> */
+		</script>
+		<script>
+
+			    var toggledrop = false
+
+			    $(document).ready(function(){
+			    if (toggledrop == false) {
+			      $("#hitboxidfk").hover(function(){
+			      $("#drop").css("display", "block");
+			      }, function(){
+			      $("#drop").css("display", "none");
+			  });
+			  } else if (toggledrop == true) {
+			      $("#hitboxidfk").hover(function(){
+			      $("#drop").css("display", "block");
+			      }, function(){
+			      $("#drop").css("display", "bloxk");
+			  });
+			};
+			    $("#buttocks").click(function(){
+			      if (toggledrop == false) {
+			        $("#drop").css("display", "block");
+			        toggledrop = true;
+			    } else {
+			      $("#drop").css("display", "none");
+			        toggledrop = false;
+			    };
+			  });
+			});
+		</script>
+		<script type="text/javascript" src="Splashes.js"></script>
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<br />
+		<div>
+			<div class="main-seg2">
+				<p style="font-size:20px; direction: ltr; margin-left:20%;">
+					This site is a very heavy WIP
+				</p>
+				<div id="grouping">
+					<div id="grouped">
+						<div id="guy-ourp">
+							<div id="rcorners2">
+								<div id="rcorners3">
+									<div id="rcorners1">
+										<span
+											style="font-size:20px;"
+											id="musicstatus"
+										></span>
+										<br />
+										<br />
+										<span id="playing"></span>
+									</div>
+								</div>
+								<br />
+								<div id="rcorners3">
+									<center>
+										<h2 style="font-size:30px">
+											Interests
+										</h2>
+									</center>
+									<b style="font-size:25px">General</b>
+									<ul>
+										<li>
+											Girls (dont hmu anymore im taken)
+										</li>
+										<li>My Girlfriend</li>
+										<li>Art</li>
+										<li>Music</li>
+										<li>Deer</li>
+										<li>Bats</li>
+									</ul>
+									<b style="font-size:25px">Shows</b>
+									<ul>
+										<li>MLP:Fim</li>
+										<li>Steven Universe</li>
+										<li>My Deer Friend Nokotan</li>
+									</ul>
+									<b style="font-size:25px">Games</b>
+									<ul>
+										<li>Minecraft</li>
+										<li>Sonic</li>
+										<li>Garn47</li>
+										<li>Outcome Memories (RIP) (Roblox)</li>
+										<li>Peak</li>
+										<li>FNF</li>
+										<li>Portal</li>
+										<li>Portal 2</li>
+										<li>Overwatch 2 (STINKY!!!)</li>
+									</ul>
+									<b style="font-size:25px">Music</b>
+									<ul>
+										<li>Vylet Pony</li>
+										<li>Tracey Brakes</li>
+										<li>Ada Rook</li>
+										<li>Underscores</li>
+										<li>r u s s e l b u c k</li>
+										<li>Femtanyl</li>
+										<li>Azure Comet</li>
+										<li>100 Gecs</li>
+										<li>marshall4</li>
+										<li>SPARKLEWOLF RADIO</li>
+										<li>Crossover Episode</li>
+									</ul>
+								</div>
+								<br />
+								<div id="rcorners3">
+									<center>
+										<h2 style="font-size:30px">Socials</h2>
+									</center>
+									<ul>
+										<li>
+											<a
+												href="https://artfight.net/~ThatPonyJules"
+											>
+												Artfight
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://space.bilibili.com/3546919829768216?spm_id_from=333.33.0.0"
+											>
+												Bilibili
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://bsky.app/profile/thatponyjules.bsky.social"
+											>
+												Bluesky
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://thatponyjules.carrd.co/"
+											>
+												Carrd
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://www.castingcall.club/ThatPonyJules"
+											>
+												Casting Call Club
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://discord.com/users/852018491900821514"
+											>
+												Discord
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://discord.com/users/1118635077706985512"
+											>
+												Discord
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://discord.com/users/1322369354398175232"
+											>
+												Discord
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://genius.com/ThatPonyJules"
+											>
+												Genius
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://sites.google.com/view/thatponyjules/home"
+											>
+												Google Site
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://www.instagram.com/thatponyjules/"
+											>
+												Instagram
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://ko-fi.com/thatponyjules"
+											>
+												Ko-Fi
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://www.last.fm/user/Julesfr__"
+											>
+												Last.FM
+											</a>
+										</li>
+										<br />
+										<li>
+											<a href="/">Nekoweb</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://thatponyjules.neocities.org"
+											>
+												Neocities
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://thatponyjules.newgrounds.com/"
+											>
+												Newgrounds
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://www.roblox.com/users/2750517835/profile"
+											>
+												Roblox
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://soundcloud.com/thatponyjules"
+											>
+												Soundcloud
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://steamcommunity.com/profiles/76561199434504564/"
+											>
+												Steam
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://thatponyjules.straw.page"
+											>
+												Strawpage
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://www.tiktok.com/@thatponyjules"
+											>
+												Tiktok
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://thatponyjules.tumblr.com"
+											>
+												Tumblr
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://www.twitch.tv/thatponyjules"
+											>
+												Twitch
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://x.com/ThatPonyJules"
+											>
+												Twitter
+											</a>
+										</li>
+										<br />
+										<li>
+											<a
+												href="https://www.youtube.com/@ThatPonyJules"
+											>
+												Youtube
+											</a>
+										</li>
+										<br />
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="ourple">
+						<div id="grouped">
+							<div id="rcorners2">
+								<div id="rcorners3">
+									<div id="rcorners1">
+										<p style="font-size:25px">
+											<b>About</b>
+										</p>
+										<p>
+											<span>
+												Hi!! it me!! I go by Jules or
+											</span>
+											<span class="tooltip">
+												<u>Canni</u>
+												!
+												<span class="tooltiptext">
+													If ur close / IRL
+												</span>
+											</span>
+											<br />
+											My WOKENOUNS are
+											She/They/It/Doe/Bat.
+											<br />
+											I'm a MINOR of MINORTOWN and
+											ummmmmmm
+											<br />
+											I make
+											<a href="/Music"><u>music</u></a>
+											and art (sometimes)
+											<br />
+											I'm the one who sparked
+											<a
+												href="https://www.youtube.com/watch?v=4PyFkH9LCGQ"
+											>
+												<u>I'm Creekflow</u>
+											</a>
+											by
+											<a href="https://vyletpony.com">
+												<u>Vylet Pony</u>
+											</a>
+											<br />
+											Speaking of,,, as of right now I'm
+											working on an I'm Creekflow FNF mod
+											:3
+											<br />
+											Clicking on some things may do
+											something! or not idk
+										</p>
+									</div>
+								</div>
+
+								<br />
+								<div id="rcorners3">
+									<div style="transform: translateY(-15px);">
+										<br />
+										<div class="scroll-container">
+											<div
+												class="scroll-wrapper fade-edges"
+											>
+												<div class="scroll-content">
+													<a
+														href="https://tenor.com/view/girlkisser-girlkisser-meme-gif-gif-1616789843951133615"
+													>
+														<img
+															src="assets/Badges/Transbian.png"
+															width="10%"
+															height="auto"
+															alt="Transbian"
+															title="I like girllssssss"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://store.steampowered.com/app/504230/Celeste/"
+													>
+														<img
+															src="assets/Badges/tyg.gif"
+															width="10%"
+															height="auto"
+															alt="Trans Your Gender"
+															title="Train your jender"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="assets/Badges/jules.gif"
+													>
+														<img
+															src="assets/Badges/jules.gif"
+															width="10%"
+															height="auto"
+															alt="Jules Button"
+															title="Jules Button"
+															class="grow"
+														/>
+													</a>
+													<a onclick="myFunction()">
+														<img
+															type="image"
+															src="assets/Badges/nova.gif"
+															width="10%"
+															height="auto"
+															alt="Novassite"
+															title="The humble and hungry Nova"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://starfield.nekoweb.org"
+													>
+														<img
+															src="assets/Badges/starfield.gif"
+															width="10%"
+															height="auto"
+															alt="Starfield"
+															title="Twix Twix Twix Twix Twix Twix Twix"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://dexterdaybreaker.neocities.org"
+													>
+														<img
+															src="https://dexterdaybreaker.neocities.org/Images/ButtonLogo.png"
+															width="10%"
+															height="auto"
+															alt="dexterdaybreaker"
+															title="Nightmare Moon!"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://shadthecheese.neocities.org"
+													>
+														<img
+															src="https://shadthecheese.neocities.org/buttons/button.png"
+															width="10%"
+															height="auto"
+															alt="shadthecheese"
+															title="Mmmm! Cheesy!"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://Nekoweb.org"
+													>
+														<img
+															src="assets/Badges/Nekoweb.gif"
+															width="10%"
+															height="auto"
+															alt="Nekoweb"
+															title="The internet is for the cats!"
+															class="grow"
+														/>
+													</a>
+													<a href="">
+														<img
+															src="assets/Badges/TRAHU.gif"
+															width="10%"
+															height="auto"
+															alt="Trans Rights are Human Rights!"
+															title="Trans Rights are Human Rights!"
+														/>
+													</a>
+													<a
+														href="https://y2k.neocities.org"
+													>
+														<img
+															src="assets/Badges/Y2K.png"
+															width="10%"
+															height="auto"
+															alt="Y2K"
+															title="I got alot of my Blinkees, Badges, and Stamps from here!"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://store.steampowered.com/app/1451940/NEEDY_STREAMER_OVERLOAD/"
+													>
+														<img
+															src="assets/Badges/unknown_003.png"
+															width="10%"
+															height="auto"
+															alt="Needy Streamer Overload"
+															title="Needy Streamer Overload"
+															class="grow"
+														/>
+													</a>
+													<a href="About/arghh">
+														<img
+															src="assets/Badges/piracy.gif"
+															width="10%"
+															height="auto"
+															alt="Piracy"
+															title="You should piracy now!"
+															class="grow"
+														/>
+													</a>
+													<!-- duplicate for smooth loop -->
+													<a
+														href="https://tenor.com/view/girlkisser-girlkisser-meme-gif-gif-1616789843951133615"
+													>
+														<img
+															src="assets/Badges/Transbian.png"
+															width="10%"
+															height="auto"
+															alt="Transbian"
+															title="I like girllssssss"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://store.steampowered.com/app/504230/Celeste/"
+													>
+														<img
+															src="assets/Badges/tyg.gif"
+															width="10%"
+															height="auto"
+															alt="Trans Your Gender"
+															title="Train your jender"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="assets/Badges/jules.gif"
+													>
+														<img
+															src="assets/Badges/jules.gif"
+															width="10%"
+															height="auto"
+															alt="Jules Button"
+															title="Jules Button"
+															class="grow"
+														/>
+													</a>
+													<a onclick="myFunction()">
+														<img
+															type="image"
+															src="assets/Badges/nova.gif"
+															width="10%"
+															height="auto"
+															alt="Novassite"
+															title="The humble and hungry Nova"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://starfield.nekoweb.org"
+													>
+														<img
+															src="assets/Badges/starfield.gif"
+															width="10%"
+															height="auto"
+															alt="Starfield"
+															title="Twix Twix Twix Twix Twix Twix Twix"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://dexterdaybreaker.neocities.org"
+													>
+														<img
+															src="https://dexterdaybreaker.neocities.org/Images/ButtonLogo.png"
+															width="10%"
+															height="auto"
+															alt="dexterdaybreaker"
+															title="Nightmare Moon!"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://shadthecheese.neocities.org"
+													>
+														<img
+															src="https://shadthecheese.neocities.org/buttons/button.png"
+															width="10%"
+															height="auto"
+															alt="shadthecheese"
+															title="Mmmm! Cheesy!"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://Nekoweb.org"
+													>
+														<img
+															src="assets/Badges/Nekoweb.gif"
+															width="10%"
+															height="auto"
+															alt="Nekoweb"
+															title="The internet is for the cats!"
+															class="grow"
+														/>
+													</a>
+													<a href="">
+														<img
+															src="assets/Badges/TRAHU.gif"
+															width="10%"
+															height="auto"
+															alt="Trans Rights are Human Rights!"
+															title="Trans Rights are Human Rights!"
+														/>
+													</a>
+													<a
+														href="https://y2k.neocities.org"
+													>
+														<img
+															src="assets/Badges/Y2K.png"
+															width="10%"
+															height="auto"
+															alt="Y2K"
+															title="I got alot of my Blinkees, Badges, and Stamps from here!"
+															class="grow"
+														/>
+													</a>
+													<a
+														href="https://store.steampowered.com/app/1451940/NEEDY_STREAMER_OVERLOAD/"
+													>
+														<img
+															src="assets/Badges/unknown_003.png"
+															width="10%"
+															height="auto"
+															alt="Needy Streamer Overload"
+															title="Needy Streamer Overload"
+															class="grow"
+														/>
+													</a>
+													<a href="About/arghh">
+														<img
+															src="assets/Badges/piracy.gif"
+															width="10%"
+															height="auto"
+															alt="Piracy"
+															title="You should piracy now!"
+															class="grow"
+														/>
+													</a>
+												</div>
+											</div>
+										</div>
+										<br />
+										<br />
+										<br />
+
+										<!-- Stamps you was there too -->
+										<div id="rcorners1">
+											<center>
+												<img
+													src="assets/Stamps/20percent.gif"
+													width="13%"
+													alt="20 Percent"
+													title="it needs to be about 20% cooler"
+												/>
+												<img
+													src="assets/Stamps/3DS.gif"
+													width="13%"
+													alt="3DS"
+													title="With a keychain of Pinkie, her cupcakes are the best!"
+												/>
+												<img
+													src="assets/Stamps/love-the-night.gif"
+													width="13%"
+													alt="I <3 THE NIGHT"
+													title="Dark rooms <3"
+												/>
+												<a
+													href="https://derpy-hooves.com"
+												>
+													<img
+														src="assets/Stamps/Derpy.png"
+														width="13%"
+														alt="Muffinsss"
+														title='Derpy "Bubbles Muffins Ditzy-Doo" the horse (The Gray One)'
+														class="grow"
+													/>
+												</a>
+												<a
+													href="https://www.youtube.com/watch?v=ogWXimh8_zA"
+												>
+													<img
+														src="assets/Stamps/gems.gif"
+														width="13%"
+														alt="gems"
+														title="All the worlds gems are mine to keep!"
+														class="grow"
+													/>
+												</a>
+												<a
+													href="https://youtu.be/9wQnO-Katws?si=JFuIVe59ymFxiXVk"
+												>
+													<img
+														src="assets/Stamps/femt.gif"
+														width="13%"
+														alt="Femtanyl"
+														title="M4-M4-M4K3 4 B1G B4G, MURD3R 3V3RY1 U KNOW 4ND G0 4ND M4KE 4 B1G B4G"
+														class="grow"
+													/>
+												</a>
+												<img
+													src="assets/Stamps/insufferable.png"
+													width="13%"
+													alt="Insufferable Bastard"
+													title="ime a bitche"
+												/>
+												<img
+													src="assets/Stamps/MLPFiM.gif"
+													width="13%"
+													alt="MLP FiM"
+													title='MLPFiM stands for "My Little Pidgeon: Flocking is Migration"'
+												/>
+												<img
+													src="assets/Stamps/RD-nap.png"
+													width="13%"
+													alt="Rainbow Dash Nap"
+													title="HONK MIMIMIMI HONK MIMIMIMI HONK MIMIMIMI "
+												/>
+												<img
+													src="assets/Stamps/wii.png"
+													width="13%"
+													alt="Wii"
+													title="wee wee"
+												/>
+												<img
+													src="assets/Stamps/stars.gif"
+													width="13%"
+													alt="STARS"
+													title="all stars are mine actually, sorry!"
+												/>
+												<img
+													src="assets/Stamps/owo.gif"
+													width="13%"
+													alt="owo"
+													title="owo"
+												/>
+												<img
+													src="assets/Stamps/beast.gif"
+													width="13%"
+													alt="Beast Boy"
+													title="I do my dance just like this"
+												/>
+												<img
+													src="assets/Stamps/dirt.gif"
+													width="13%"
+													alt="This wall tastes like dirt!"
+													title="This wall tastes like dirt!"
+												/>
+												<img
+													src="assets/Stamps/Antonymph.gif"
+													width="13%"
+													alt="ANTONYMPH"
+													title="She said 'RAWR X3' so it's true love at first sight!"
+													id="Antbutton"
+													class="grow"
+												/>
+												<audio
+													id="Antaudio"
+													src="assets/Audo/ANTWEB.ogg"
+												></audio>
+												<a
+													href="https://vyletpony.bandcamp.com/album/carousel-an-examination-of-the-shadow-creekflow-and-its-life-as-an-afterthought"
+												>
+													<img
+														src="assets/Stamps/Carousel.png"
+														width="13%"
+														alt="Carousel"
+														title="Oh, Carousel, spectacle, show and tell, your living hell!"
+														class="grow"
+													/>
+												</a>
+												<a
+													href="https://vyletpony.bandcamp.com/album/can-openers-notebook-fish-whisperer"
+												>
+													<img
+														src="assets/Stamps/Fishwhisperer.png"
+														width="13%"
+														alt="Can Openers Notebook: Fish Whisperer"
+														title="Does it make you mad when I sound like this?"
+														class="grow"
+													/>
+												</a>
+												<a
+													href="https://vyletpony.bandcamp.com/album/girls-who-are-wizards"
+												>
+													<img
+														src="assets/Stamps/Girlswhoarewizards.png"
+														width="13%"
+														alt="Girls Who Are Wizards"
+														title="Be who you're meant to be!"
+														class="grow"
+													/>
+												</a>
+												<a
+													href="https://vyletpony.bandcamp.com/album/love-ponystep"
+												>
+													<img
+														src="assets/Stamps/Loveandponystep.png"
+														width="13%"
+														alt="Love and Ponystep"
+														title="Does it piss you off when I sound like this?"
+														class="grow"
+													/>
+												</a>
+												<a
+													href="https://vyletpony.bandcamp.com/album/i-was-the-loner-of-paradise-valley"
+												>
+													<img
+														src="assets/Stamps/Paradisevalley.png"
+														width="13%"
+														alt="I Was The Loner of Paradise Valley"
+														title="Eyes like a motherfuckin' halo"
+														class="grow"
+													/>
+												</a>
+
+												<br />
+
+												<!-- Blinkies -->
+
+												<img
+													src="assets/Blinkies/rainbow.gif"
+													width="30%"
+													alt="Rainbow Blinkie"
+													title="I could clear the sky in 10 seconds flat!"
+												/>
+												<img
+													src="assets/Blinkies/fluttershy.gif"
+													width="30%"
+													alt="Fluttershy Blinkie"
+													title="yay!"
+												/>
+												<img
+													src="assets/Blinkies/twilight.gif"
+													width="30%"
+													alt="Twilight Blinkie"
+													title="it needs to be about 20% cooler"
+												/>
+												<img
+													src="assets/Blinkies/carrion.gif"
+													width="30%"
+													alt="Carrion"
+													title="A carrion so fruitless, the flies disperse unsatisfied"
+												/>
+												<img
+													src="assets/Blinkies/night.gif"
+													width="30%"
+													alt="Night"
+													title="Honkk mimimimimi"
+												/>
+												<img
+													src="assets/Blinkies/stars.gif"
+													width="30%"
+													alt="Stars"
+													title="Starrrsssssss <3"
+												/>
+												<img
+													src="assets/Blinkies/vampire.gif"
+													width="30%"
+													alt="Bite"
+													title="im  sooooo hungry"
+												/>
+												<img
+													src="assets/Blinkies/portal.gif"
+													width="30%"
+													alt="Portal"
+													title="Fatty-- fatty fatty, no parents?"
+												/>
+												<a onclick="purpleify()">
+													<img
+														src="assets/Blinkies/purple.gif"
+														width="30%"
+														alt="PURPLE"
+														title="I LOVE BEING PURPLE"
+														class="grow"
+													/>
+												</a>
+												<img
+													src="assets/Blinkies/lesbian.gif"
+													width="30%"
+													alt="Lesbian"
+													title="im a lebanon"
+												/>
+												<img
+													src="assets/Blinkies/kitty.gif"
+													width="30%"
+													alt="kbitty"
+													title="TITTY TAT!!!!!!!!"
+												/>
+												<br />
+												<br />
+												<img
+													src="assets/Badges/jules.gif"
+												/>
+												<textarea style="width: 40%">
+<a href="https:thatponyjules.nekoweb.org"><img src="https:thatponyjules.nekoweb.org/assets/Badges/jules.gif" /></a></textarea
+												>
+											</center>
+										</div>
+									</div>
+								</div>
+								<br />
+								<div id="hidden">
+									<div id="rcorners3">
+										<iframe
+											id="rcorners1"
+											style="padding:0px;margin:0px;overflow: hidden; border:none"
+											src="https://novassite.net/#fromtree"
+											width="100%"
+											height="700px"
+											;
+											frameborder=""
+										></iframe>
+									</div>
+									<br />
+								</div>
+								<div id="rcorners3">
+									<img
+										id="rcorners1"
+										src="assets/Cory.png"
+										width="100%"
+										height="120px"
+									/>
+									<br />
+								</div>
+								<br />
+								<div id="rcorners3">
+									<iframe
+										src="https://thatponyjules.atabook.org/"
+										width="100%"
+										height="700px"
+										style="border:none"
+										id="rcorners1"
+									></iframe>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<br />
+		<br />
+		<br />
+		<script
+			type="text/javascript"
+			src="https://panzi.github.io/Browser-Ponies/basecfg.js"
+			id="browser-ponies-config"
+		></script>
+		<script
+			type="text/javascript"
+			src="https://panzi.github.io/Browser-Ponies/browserponies.js"
+			id="browser-ponies-script"
+		></script>
+		<script>
+			function myFunction() {
+			  var x = document.getElementById("hidden");
+			  if (x.style.display === "none") {
+			    x.style.display = "block";
+			  } else {
+			    x.style.display = "none";
+			  }
+			}
+		</script>
+		<script>
+			      $( document ).ready(function() {
+			    myFunction()
+			});
+		</script>
+		<script>
+			function purpleify() {
+				const ourple = document.getElementById("ourple");
+				const guy = document.getElementById("guy-ourp");
+				ourple.style.filter = "sepia(100%) saturate(500%) brightness(80%) hue-rotate(210deg)";
+				guy.style.display = "none";
+
+			}
+		</script>
+		<script>
+			const scrollText = document.getElementById("scrollText");
+			// Duplicate the text for seamless looping
+			scrollText.innerHTML += " " + scrollText.innerHTML;
+
+			let x = 0;
+			function scroll() {
+			  x -= 0.2; // speed (smaller number = slower)
+			  scrollText.style.transform = `translateX(${x}px)`;
+
+			  // reset when half of the content has scrolled
+			  if (Math.abs(x) >= scrollText.scrollWidth / 2) {
+			    x = 0;
+			  }
+
+			  requestAnimationFrame(scroll);
+			}
+
+			scroll();
+		</script>
+		<script type="text/javascript" src="lastfm.js"></script>
+		<script type="text/javascript" src="Splashes.js"></script>
+		<script>
+			const img = document.getElementById('Antbutton');
+			const audio = document.getElementById('Antaudio');
+			let isPlaying = false;
+
+			audio.volume = 0.5; // set volume once here
+
+			img.addEventListener('click', () => {
+			  if (!isPlaying) {
+			    audio.currentTime = 0; // Start from beginning
+			    audio.play();
+			  } else {
+			    audio.pause();
+			    audio.currentTime = 0; // Reset to start
+			  }
+			  isPlaying = !isPlaying;
+			});
+
+			// Reset image when audio finishes
+			audio.addEventListener('ended', () => {
+			  isPlaying = false;
+			});
+		</script>
+	</body>
+</html>

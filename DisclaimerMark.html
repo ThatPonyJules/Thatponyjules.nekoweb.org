@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.14.1/jquery-ui.min.js"></script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Disclaimer</title>
+		<link href="/style.css" rel="stylesheet" type="text/css" media="all" />
+		<style>
+			body {
+			  height: 100vh;
+			  display: block;
+			  justify-content: center;
+			  align-items: center;
+			  color: white;
+			  text-align: center;
+			  font-family: 'DTM', sans-serif;
+			  background-color:#3F256B;
+			  background-image:url('narc.png');
+			  background-repeat:repeat;
+			  background-blend-mode: normal;
+			}
+
+			.imgthing4mark  {
+			  display: block;
+			  margin-left: auto;
+			  margin-right: auto;
+			}
+			.center-screen {
+			  display: flex;
+			  justify-content: center;
+			  align-items: center;
+			  text-align: center;
+			  min-height: 100vh;
+			}
+			.center {
+			  display: block;
+			  margin-left: auto;
+			  margin-right: auto;
+			}
+
+			   .fade-in {
+			     opacity: 0;
+			     transform: translateY(-20px); /* start slightly above */
+			     animation: fadeInMove 2s ease-in-out forwards;
+			   }
+			   .fade-in-fuck {
+			     opacity: 0;
+			     transform: translateY(-20px); /* start slightly above */
+			     animation: fadeInMove 7s ease-in-out forwards;
+			   }
+			.fade-in.delay {
+			  animation-delay: 1s;
+			}
+			.fade-in.delay2 {
+			  animation-delay: 3s;
+			}
+
+			   @keyframes fadeInMove {
+			     0% {
+			       opacity: 0;
+			       transform: translateY(-20px); /* move from top */
+			     }
+			     100% {
+			       opacity: 1;
+			       transform: translateY(0); /* settle in place */
+			     }
+			   }
+
+			.text-with-gif {
+			  display: flex;
+			  align-items: center;
+			  justify-content: center;
+			  gap: 5px; /* space between text and gif */
+			}
+
+			.shaken {
+			  animation: shake 0.5s;
+			  animation-iteration-count: infinite;
+			  animation-delay: 5s;
+			}
+
+			.#CenterContainer {
+				  /* make element inline flex-container */
+				  /* this will make its children flex-items */
+				  display: inline-flex;
+				  /* align-items items in column */
+				  flex-direction: column;
+				  /* center items horizontally */
+				  align-items: center;
+				  /* center items vertically */
+				  justify-content: center;
+
+				  border: solid 3px black;
+				  width: 400px;
+				  height: 400px;
+				}
+
+			@keyframes shake {
+			  0% { transform: translate(1px, 1px) rotate(0deg); }
+			  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+			  20% { transform: translate(-3px, 0px) rotate(1deg); }
+			  30% { transform: translate(3px, 2px) rotate(0deg); }
+			  40% { transform: translate(1px, -1px) rotate(1deg); }
+			  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+			  60% { transform: translate(-3px, 1px) rotate(0deg); }
+			  70% { transform: translate(3px, 1px) rotate(-1deg); }
+			  80% { transform: translate(-1px, -1px) rotate(1deg); }
+			  90% { transform: translate(1px, 2px) rotate(0deg); }
+			  100% { transform: translate(1px, -2px) rotate(-1deg); }
+			}
+
+			#overlay {
+			  position: fixed;
+			  display: none;
+			  width: 100%;
+			  height: 100%;
+			  top: 0;
+			  left: 0;
+			  right: 0;
+			  bottom: 0;
+			  background-color: rgba(0,0,0,1);
+			  z-index: 2;
+			  transform-origin: 10% 10%;
+			}
+
+			#text{
+			  position: absolute;
+			  top: 50%;
+			  left: 50%;
+			  font-size: 50px;
+			  color: white;
+			  transform: translate(-50%,-50%);
+			  -ms-transform: translate(-50%,-50%);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="overlay">
+			<div id="CenterContainer" class="text shaken">
+				<div class="fade-in easedown">
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<br />
+					<h1>Meowdy Meowdy!</h1>
+					<p>
+						This site was made with a 1920x1080p monitor on Firefox!
+					</p>
+					<p>
+						Please keep in mind that this site is NOT mobile
+						friendly
+					</p>
+				</div>
+
+				<div class="fade-in delay">
+					<div class="text-with-gif">
+						<p>if it doesnt work</p>
+						<img
+							class="fade-in-fuck delay"
+							src="FUCK.gif"
+							height="30px"
+							alt="FUCK gif"
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<center>
+			<h1 style="font-family: DTM, sans-serif;" height="60px">
+				Hello Everybody
+			</h1>
+			<p style="font-family:DTM, sans-serif;" height="30px">
+				My name is Markiplier
+			</p>
+			<p style="font-family:DTM, sans-serif;" height="30px">
+				and welcome to Five Nights at Freddy's
+			</p>
+			<p style="font-family:DTM, sans-serif;" height="30px">
+				an indie horror game that you guys suggested
+			</p>
+			<p style="font-family:DTM, sans-serif;" height="30px">en masse</p>
+			<p style="font-family:DTM, sans-serif;" height="30px">
+				and I saw that Yamimash played it and he said it was really
+				really good
+			</p>
+			<p style="font-family:DTM, sans-serif;" height="30px">
+				So I'm very eager to see what is up
+			</p>
+		</center>
+
+		<br />
+		<br />
+		<br />
+		<br />
+
+		<center>
+			<img src="Click.gif" class="imgthing4mark" />
+			<a href="Home">
+				<img
+					src="Mark.png"
+					width="500"
+					height="500"
+					class="imgthing4mark"
+				/>
+			</a>
+			<img src="Click.gif" class="imgthing4mark" />
+		</center>
+		<audio id="Markdio" src="assets/Audio/Mark.ogg"></audio>
+		<audio id="Markdio" src="assets/Audio/boom.ogg"></audio>
+		<script>
+			function on() {
+			  document.getElementById("overlay").style.display = "block";
+			}
+
+
+			function off() {
+			  $("#overlay").effect({
+					effect: "explode",
+					easing: "easeOutCirc",
+					pieces: 12,
+					duration: 1000
+				});
+			}
+		</script>
+		<script>
+			const marker = new Audio("assets/Audio/Mark.ogg");
+			const boomer = new Audio("assets/Audio/boom.ogg");
+			marker.volume = 0.6;
+			boomer.volume = 0.8;
+			marker.loop = false;
+			boomer.loop = false;
+
+			function boom() {
+				off()
+				marker.play();
+				boomer.play();
+			}
+
+			const myTimeout = setTimeout(boom, 7000);
+				      $( document ).ready(function() {
+				    on()
+				});
+		</script>
+	</body>
+</html>

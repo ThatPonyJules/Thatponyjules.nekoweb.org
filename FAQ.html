@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="topbarnologo.js"></script>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>FAQ</title>
+		<link href="/style.css" rel="stylesheet" type="text/css" media="all" />
+		<link
+			rel="apple-touch-icon"
+			sizes="180x180"
+			href="/apple-touch-icon.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="32x32"
+			href="/favicon-32x32.png"
+		/>
+		<link
+			rel="icon"
+			type="image/png"
+			sizes="16x16"
+			href="/favicon-16x16.png"
+		/>
+		<link rel="manifest" href="/site.webmanifest" />
+		<style>
+			.collapsible {
+			  background-color: #777;
+			  color: white;
+			  cursor: pointer;
+			  padding: 18px;
+			  width: 100%;
+			  border: none;
+			  text-align: left;
+			  outline: none;
+			  font-size: 15px;
+			  border-radius:20px;
+			}
+
+			.collapsible:hover {
+			  background-color: #00000090;
+			  color: white;
+			}
+			.active {
+			  background-color: #00000090;
+			  border-radius:20px 20px 0 0;
+			}
+
+			.content {
+			  padding: 0 18px;
+			  max-height: 0;
+			  overflow: hidden;
+			  transition: max-height 0.2s ease-out;
+			  background-color: #00000020;
+			  border-radius:0 0 20px 20px;
+			}
+			.container {
+			  display: flex; /* Makes the container a flex container */
+			  justify-content: space-around; /* Distributes space evenly around items */
+			  align-items: flex-start; /* Aligns items to the start of the cross-axis (top) */
+			  /* Or use align-items: center; for vertical centering */
+			  /* Or use align-items: stretch; to make boxes fill the container height */
+			}
+
+			.box {
+			  width: 30%; /* Adjust width as needed, leaving space for margins/gaps */
+			  padding: 20px;
+			  border: 1px solid #ccc;
+			  background-color: #f0f0f020;
+			  text-align: center;
+			  margin: 0 10px; /* Add horizontal margin for spacing between boxes */
+			}
+		</style>
+	</head>
+	<body>
+		<h4></h4>
+		<div class="main-seg2">
+			<p>Answers to theoretical questions no one has asked me:</p>
+			<div class="container">
+				<div class="box">
+					<button class="collapsible">
+						Can I use your music in something?
+					</button>
+					<div class="content">
+						<p>
+							I don't see why you would
+							<i>want</i>
+							to use my music in things, but if you do, please
+							just credit me! I'm fine with it!
+						</p>
+					</div>
+				</div>
+				<div class="box">
+					<button class="collapsible">Open Section 2</button>
+					<div class="content">
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing
+							elit, sed do eiusmod tempor incididunt ut labore et
+							dolore magna aliqua. Ut enim ad minim veniam, quis
+							nostrud exercitation ullamco laboris nisi ut aliquip
+							ex ea commodo consequat.
+						</p>
+					</div>
+				</div>
+				<div class="box">
+					<button class="collapsible">Open Section 3</button>
+					<div class="content">
+						<p>
+							Lorem ipsum dolor sit amet, consectetur adipisicing
+							elit, sed do eiusmod tempor incididunt ut labore et
+							dolore magna aliqua. Ut enim ad minim veniam, quis
+							nostrud exercitation ullamco laboris nisi ut aliquip
+							ex ea commodo consequat.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			var coll = document.getElementsByClassName("collapsible");
+			var i;
+
+			for (i = 0; i < coll.length; i++) {
+			  coll[i].addEventListener("click", function() {
+			    this.classList.toggle("active");
+			    var content = this.nextElementSibling;
+			    if (content.style.maxHeight){
+			      content.style.maxHeight = null;
+			    } else {
+			      content.style.maxHeight = content.scrollHeight + "px";
+			    }
+			  });
+			}
+		</script>
+	</body>
+</html>

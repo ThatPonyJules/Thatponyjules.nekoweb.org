@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Not Found</title>
+
+		<style>
+			/* Rounded container */
+			#rcorners1 {
+			  border-radius: 25px;
+			  background: rgba(173, 170, 255, 0.8);
+			  padding: 20px;
+			  width: 50%;
+			  height: auto;
+			  margin: 0 auto; /* centers horizontally */
+			}
+
+			/* Centers images and blocks */
+			.center {
+			  display: block;
+			  margin-left: auto;
+			  margin-right: auto;
+			}
+
+			/* Body background setup */
+			body {
+			  /*  'margin: center' is invalid — removed */
+			  margin: 0;
+			  height: 100vh;
+			  overflow-y: hidden;
+			  background-image: url('assets/wallpaper.png');
+			  background-repeat: no-repeat;
+			}
+
+			.top-bar {
+			  margin-top: 30px;
+			  margin-right: 15%;
+			}
+
+			/* Centers content on screen vertically and horizontally */
+			.center-screen {
+			  display: flex; /* 'static' isn’t a valid display value */
+			  justify-content: center;
+			  align-items: center;
+			  text-align: center;
+			  min-height: 100vh;
+			}
+
+			/* Flips image horizontally */
+			.flipped {
+			  transform: scaleX(-1) translateY(3px);
+			}
+		</style>
+		<link href="/style.css" rel="stylesheet" type="text/css" media="all" />
+	</head>
+
+	<body>
+		<div class="center-screen">
+			<div class="center" id="rcorners1">
+				<h1 style="font-size: 40px;">Page Not Found</h1>
+				<img
+					src="/assets/Jules-stare.png"
+					alt="Jules Stare"
+					style="width: 30%; height: auto;"
+				/>
+				<p style="font-size: 20px;">
+					Sorry about that! I couldn’t quite find the page you were
+					looking for!
+					<img
+						class="flipped"
+						src="/assets/DColon.png"
+						alt="D:"
+						style="height: 20px;"
+					/>
+				</p>
+				<p>
+					<a href="/Home">Click here to be taken to the home page!</a>
+				</p>
+			</div>
+		</div>
+	</body>
+</html>
