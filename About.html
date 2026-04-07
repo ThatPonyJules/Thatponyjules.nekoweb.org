@@ -204,7 +204,7 @@
 				position: relative;
 			}
 			.splash-bg {
-				display: block;
+				display: flex;
 				width: 75%;
 				height: auto;
 			}
@@ -285,8 +285,9 @@
 			src="https://panzi.github.io/Browser-Ponies/browserponies.js"
 			id="browser-ponies-script"
 		></script>
+		<!-- to fix, comment only "<![CDATA[" -->
 		<script type="text/javascript">
-			/* <![CDATA[ */ (function (cfg) {BrowserPonies.setBaseUrl(cfg.baseurl);BrowserPonies.loadConfig(BrowserPoniesBaseConfig);BrowserPonies.loadConfig(cfg);})({"baseurl":"https://panzi.github.io/Browser-Ponies/","fadeDuration":500,"volume":1,"fps":25,"speed":3,"audioEnabled":false,"dontSpeak":true,"showFps":false,"showLoadProgress":true,"speakProbability":0.1,"spawn":{"fluttershy":1,"princess luna":1,"rainbow dash":1,"twilight sparkle":1},"autostart":true}); /* ]]> */
+			/* <![CDATA[  (function (cfg) {BrowserPonies.setBaseUrl(cfg.baseurl);BrowserPonies.loadConfig(BrowserPoniesBaseConfig);BrowserPonies.loadConfig(cfg);})({"baseurl":"https://panzi.github.io/Browser-Ponies/","fadeDuration":500,"volume":1,"fps":25,"speed":3,"audioEnabled":false,"dontSpeak":true,"showFps":false,"showLoadProgress":true,"speakProbability":0.1,"spawn":{"fluttershy":1,"princess luna":1,"rainbow dash":1,"twilight sparkle":1},"autostart":true}); /* ]]> */
 		</script>
 		<script>
 
@@ -303,7 +304,7 @@
 			      $("#hitboxidfk").hover(function(){
 			      $("#drop").css("display", "block");
 			      }, function(){
-			      $("#drop").css("display", "bloxk");
+			      $("#drop").css("display", "block");
 			  });
 			};
 			    $("#buttocks").click(function(){
@@ -1245,16 +1246,6 @@
 		<br />
 		<br />
 		<br />
-		<script
-			type="text/javascript"
-			src="https://panzi.github.io/Browser-Ponies/basecfg.js"
-			id="browser-ponies-config"
-		></script>
-		<script
-			type="text/javascript"
-			src="https://panzi.github.io/Browser-Ponies/browserponies.js"
-			id="browser-ponies-script"
-		></script>
 		<script>
 			function myFunction() {
 			  var x = document.getElementById("hidden");
