@@ -34,8 +34,6 @@ body {
 	font-family: "Frag-Mono", "Courier New", "monospace";
 	height: 100%;
 	overflow: auto;
-	scrollbar-color: #c2feea #427765;
-	scrollbar-width: thin;
 }
 
 a:hover,

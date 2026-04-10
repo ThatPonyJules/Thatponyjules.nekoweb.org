@@ -1,184 +1,343 @@
-	<!doctype html>
-	<html>
-		<head>
-			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-			<script type="text/javascript" src="topbarnologo.js"></script>
-			<style></style>
-			<meta charset="UTF-8" />
-			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<title>Music</title>	
-			<link href="newstyle.css" rel="stylesheet" type="text/css" media="all" />
-			<style>
-				iframe {
-				display: block;
-				width: 100%;
-				}
-
-				#mydiv {
-				position: absolute;
-				z-index: 9;
-				background-color: #c379ff;
-				text-align: center;
-				border: 4px solid #c379ff;
-				width: 100%;
-				max-width: 600px;
-				border-radius: 5px;
-				}
-
-				#mydivheader {
-				padding: 5px;
-				cursor: move;
-				z-index: 10;
-				background-color: #c379ff;
-				color: #fff;
-
-				width: 100%;
-				box-sizing: border-box;
-				display: flex;
-				justify-content: space-between; /* pushes items apart */
-				align-items: center;            /* vertical alignment */
-				}
-
-				#divheadertext {
-					max-width:75%;
-				}
-				.iframe-wrapper {
-				width: 100%;
-				aspect-ratio: 16 / 9;   /* keeps it proportional */
-				overflow: hidden;
-				position: relative;
-				border-radius:5px;
-				}
-
-				.iframe-wrapper iframe {
-				width: 1920px;
-				height: 1080px;
-				border: none;
-
-				transform-origin: top left;
-
-				/* scale based on container width */
-				transform: scale(var(--scale, 1));
-				}
-				#reenablewindow {
-					display: none;
-				}
-			</style>
-		</head>
-		<body>
-			<div id="mydiv">
-				<div id="mydivheader">
-					<div id="divheadertext">
-						Stupid fucking window (click my logo thing)
-					</div>
-					<input
-						type="image"
-						src="https://thatponyjules.nekoweb.org/TPJ LOGO.png"
-						width="20%"
-						id="closewindow"
-					/>
-				</div>
-				<div class="iframe-wrapper">
-					<iframe
-						src="https://thatponyjules.nekoweb.org/fuckyounova"
-					></iframe>
-				</div>
-			</div>
-
-			<input type="image" src="narc.png" height="20%" id="bt_toggleponies"/>
-				<input type="image" src="narc.png" height="20%" style="filter: hue-rotate(180deg);" id="reenablewindow"/>
-			<script>
-				//Make the DIV element draggagle:
-				dragElement(document.getElementById("mydiv"));
-
-				function dragElement(elmnt) {
-				var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-				if (document.getElementById(elmnt.id + "header")) {
-					/* if present, the header is where you move the DIV from:*/
-					document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
-				} else {
-					/* otherwise, move the DIV from anywhere inside the DIV:*/
-					elmnt.onmousedown = dragMouseDown;
-				}
-
-				function dragMouseDown(e) {
-					e = e || window.event;
-					e.preventDefault();
-					// get the mouse cursor position at startup:
-					pos3 = e.clientX;
-					pos4 = e.clientY;
-					document.onmouseup = closeDragElement;
-					// call a function whenever the cursor moves:
-					document.onmousemove = elementDrag;
-				}
-
-				function elementDrag(e) {
-					e = e || window.event;
-					e.preventDefault();
-					// calculate the new cursor position:
-					pos1 = pos3 - e.clientX;
-					pos2 = pos4 - e.clientY;
-					pos3 = e.clientX;
-					pos4 = e.clientY;
-					// set the element's new position:
-					elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-					elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-				}
-
-				function closeDragElement() {
-					/* stop moving when mouse button is released:*/
-					document.onmouseup = null;
-					document.onmousemove = null;
-				}
-				}
-			</script>
-
-			<script>
-				function updateScale() {
-				const wrapper = document.querySelector('.iframe-wrapper');
-				const iframe = wrapper.querySelector('iframe');
-				const scale = wrapper.clientWidth / 1920;
-				iframe.style.setProperty('--scale', scale);
-				}
-
-				window.addEventListener('resize', updateScale);
-				window.addEventListener('load', updateScale);
-			</script>
-			<script>
-				$("#closewindow").click(function () {
-					$("#mydiv").hide();              // hide the window
-					$("#reenablewindow").show();     // show reopen button
-				});
-				$("#reenablewindow").click(function () {
-					$("#mydiv").show();              // show the window
-					$("#reenablewindow").hide();     // hide button again
-				});
-			</script>
-			<script type="text/javascript" src="https://browser.pony.house/js/ponybase.js"></script><script type="text/javascript" src="https://browser.pony.house/js/browserponies.js" id="browser-ponies-script"></script><script type="text/javascript">/* <![CDATA[ */ (function (cfg) {BrowserPonies.setBaseUrl(cfg.baseurl);BrowserPonies.loadConfig(BrowserPoniesBaseConfig);BrowserPonies.loadConfig(cfg);})({"baseurl":"https://browser.pony.house/","allowDoubleClickControl":true,"fadeDuration":500,"volume":0,"fps":25,"speed":3,"audioEnabled":false,"dontSpeak":true,"showFps":false,"showLoadProgress":true,"speakProbability":0.1,"spawn":{"fluttershy":1,"nightmare moon":1,"princess twilight sparkle":1,"rainbow dash":1},"autostart":false}); /* ]]> */</script>
-			<script>
-				$(window).on("load", function () {
-					// load saved state
-					var ponytoggle = localStorage.getItem("ponytoggle") === "true";
-
-					// function to update BrowserPonies based on toggle
-					function updatePonies() {
-						if (ponytoggle) {
-							BrowserPonies.stop();
-						} else {
-							BrowserPonies.start();
-						}
+		<!doctype html>
+		<html>
+			<head>
+				<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+				<script type="text/javascript" src="topbarnologo.js"></script>
+				<script type="text/javascript" src="lastfmtest copy.js"></script>
+				<script type="text/javascript" src="Splashes.js"></script>
+				<style></style>
+				<meta charset="UTF-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+				<title>Music</title>	
+				<link href="newstyle.css" rel="stylesheet" type="text/css" media="all" />
+				<style>
+					/* Window */
+					iframe {
+					display: block;
+					width: 100%;
 					}
 
-					// small delay to ensure BrowserPonies is ready
-					setTimeout(updatePonies, 100); // 100ms delay
+					#windowdiv {
+						position: absolute;
+						z-index: 9;
+						background-color: #c379ff;
+						text-align: center;
+						border: 4px solid #c379ff;
+						width: 100%;
+						max-width: 600px;
+						border-radius: 5px;
 
-					// click handler
-					$("#bt_toggleponies").click(function () {
-						ponytoggle = !ponytoggle;           // flip the toggle
-						localStorage.setItem("ponytoggle", ponytoggle);
-						updatePonies();                      // apply new state
+						top: 50%;
+						left: calc(100% - 620px); /* 600px width + ~20px margin */
+						transform: translateY(-50%);
+					}
+
+					#windowdivheader {
+					padding: 5px;
+					cursor: move;
+					z-index: 10;
+					background-color: #c379ff;
+					color: #fff;
+
+					width: 100%;
+					box-sizing: border-box;
+					display: flex;
+					justify-content: space-between; /* pushes items apart */
+					align-items: center;            /* vertical alignment */
+					}
+
+					#divheadertext {
+						max-width:75%;
+					}
+					.iframe-wrapper {
+					width: 100%;
+					aspect-ratio: 16 / 9;   /* keeps it proportional */
+					overflow: hidden;
+					position: relative;
+					border-radius:5px;
+					}
+
+					.iframe-wrapper iframe {
+					width: 1920px;
+					height: 1080px;
+					border: none;
+
+					transform-origin: top left;
+
+					/* scale based on container width */
+					transform: scale(var(--scale, 1));
+					}
+					#reenablewindow {
+						display: none;
+					}
+
+					/* Sidebar */
+					.sidenav {
+					position: fixed;
+					left: 50px;        /* <-- detached from left */
+					top: 50px;
+					bottom: 50px;
+					width: 400px;
+					max-height: 90%;
+
+					background-color: #111;
+					padding-top: 20px;
+
+					transform: translateX(-440px); /* fully hidden */
+					transition: transform 0.4s ease;
+
+					border-radius: 15px; /* now rounded on ALL sides */
+					box-shadow: 0 0 15px rgba(0,0,0,0.5);
+
+					}
+
+					.sidenavcontent {
+					position: absolute;
+					top: 0;
+					bottom: 0;
+					left: 0;
+					right: 0;
+
+					overflow-y: auto;
+					overflow-x: hidden;
+
+					padding-top: 20px;
+					direction: rtl;
+					padding-left: 10px;
+					}
+
+					.sidenavcontent::-webkit-scrollbar {
+					width: 8px;
+					}
+
+					.sidenavcontent::-webkit-scrollbar-thumb {
+					background: #444;
+					border-radius: 10px;
+					}
+
+					.sidenavcontent::-webkit-scrollbar-track {
+					background: transparent;
+					}
+
+					.sidenavcontent a, p, li, img {
+					direction: ltr; /* normal text again */
+					}
+
+					/* Open state */
+					.sidenav.open {
+					transform: translateX(0);
+					}
+
+					/* Links */
+					.sidenav a {
+					padding: 10px 20px;
+					text-decoration: none;
+					font-size: 20px;
+					color: #818181;
+					display: block;
+					}
+
+					.sidenav p {
+					color: #fff
+					}
+					.sidenav a:hover {
+					color: #f1f1f1;
+					}
+
+					/* Tab button that sticks out */
+					.sidenavtoggle {
+					position: absolute;
+					right: -25px;
+
+					top: 0;
+					bottom: 0;              /* 👈 stretch full height */
+					height: 100%;
+
+					display: flex;
+					align-items: center;   /* 👈 center the icon vertically */
+					justify-content: center;
+
+					background: #111;
+					color: white;
+					padding: 0 10px;       /* horizontal padding only */
+
+					cursor: pointer;
+
+					border-radius: 0 10px 10px 0;
+					}
+
+					.arrow {
+					display: inline-block;
+					transition: transform 0.3s ease;
+					font-size: 20px;
+					}
+
+					/* When sidebar is open, rotate arrow */
+					.sidenav.open .arrow {
+					transform: rotate(180deg);
+					}
+					
+				</style>
+			</head>
+			<body>
+				<!-- Window iframe -->
+				<div id="windowdiv">
+					<div id="windowdivheader">
+						<div id="divheadertext">
+							Stupid fucking window (click my logo thing)
+						</div>
+						<input
+							type="image"
+							src="https://thatponyjules.nekoweb.org/TPJ LOGO.png"
+							width="20%"
+							id="closewindow"
+						/>
+					</div>
+					<div class="iframe-wrapper">
+						<iframe
+							src="https://thatponyjules.nekoweb.org/fuckyounova"
+						></iframe>
+					</div>
+				</div>
+				<!-- Sidebar -->	
+				<div id="mySidenav" class="sidenav">
+					<div class="sidenavtoggle" onclick="toggleNav()">
+						<span class="arrow">➤</span>
+					</div>
+
+					<div class="sidenavcontent">
+						<span style="font-size:20px;" id="musicstatus"></span>
+						<br />
+						<br />
+						<span id="playing"></span>
+						
+					</div>
+				</div>		
+				<!--Toggle Ponies-->
+				<input type="image" src="favicon-32x32.png" height="5%" style="filter: hue-rotate(180deg);" id="bt_toggleponies"/>
+				<!--Reenable Window-->
+				<input type="image" src="favicon-32x32.png" height="5%" id="reenablewindow"/>
+				
+				
+	<!-- JAVASCRIPT -- JAVASCRIPT -- JAVASCRIPT -- JAVASCRIPT -- JAVASCRIPT -- JAVASCRIPT -- JAVASCRIPT -->
+
+	<!-- Sidenav -- Sidenav -- Sidenav -- Sidenav -- Sidenav -- Sidenav -- Sidenav -- Sidenav -->
+	
+				<script>
+					function toggleNav() {
+					document.getElementById("mySidenav").classList.toggle("open");
+					}
+				</script>
+
+				<script>
+					$(window).on("load", function () {
+						let navscale = screen.availWidth;
+						navscale = navscale * 0.25
+						navscale = navscale - (navscale * 2); 
+						navscale += 20;
+						Math.floor(navscale)
+						console.log(navscale);
 					});
-				});
-			</script>
-		</body>
-	</html>
+									
+
+									window.addEventListener('resize', updateScale);
+									window.addEventListener('load', updateScale);
+				</script>			
+
+	<!-- Window -- Window -- Window -- Window -- Window -- Window -- Window -- Window -- Window -->
+
+				<script>
+					//Make the DIV element draggagle:
+					dragElement(document.getElementById("windowdiv"));
+
+					function dragElement(elmnt) {
+					var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+					if (document.getElementById(elmnt.id + "header")) {
+						/* if present, the header is where you move the DIV from:*/
+						document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+					} else {
+						/* otherwise, move the DIV from anywhere inside the DIV:*/
+						elmnt.onmousedown = dragMouseDown;
+					}
+
+					function dragMouseDown(e) {
+						e = e || window.event;
+						e.preventDefault();
+						// get the mouse cursor position at startup:
+						pos3 = e.clientX;
+						pos4 = e.clientY;
+						document.onmouseup = closeDragElement;
+						// call a function whenever the cursor moves:
+						document.onmousemove = elementDrag;
+					}
+
+					function elementDrag(e) {
+						e = e || window.event;
+						e.preventDefault();
+						// calculate the new cursor position:
+						pos1 = pos3 - e.clientX;
+						pos2 = pos4 - e.clientY;
+						pos3 = e.clientX;
+						pos4 = e.clientY;
+						// set the element's new position:
+						elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+						elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+					}
+
+					function closeDragElement() {
+						/* stop moving when mouse button is released:*/
+						document.onmouseup = null;
+						document.onmousemove = null;
+					}
+					}
+				</script>
+
+				<script>
+					function updateScale() {
+					const wrapper = document.querySelector('.iframe-wrapper');
+					const iframe = wrapper.querySelector('iframe');
+					const scale = wrapper.clientWidth / 1920;
+					iframe.style.setProperty('--scale', scale);
+					}
+
+					window.addEventListener('resize', updateScale);
+					window.addEventListener('load', updateScale);
+				</script>
+				<script>
+					$("#closewindow").click(function () {
+						$("#windowdiv").hide();              // hide the window
+						$("#reenablewindow").show();     // show reopen button
+					});
+					$("#reenablewindow").click(function () {
+						$("#windowdiv").show();              // show the window
+						$("#reenablewindow").hide();     // hide button again
+					});
+				</script>
+				<script type="text/javascript" src="https://browser.pony.house/js/ponybase.js"></script><script type="text/javascript" src="https://browser.pony.house/js/browserponies.js" id="browser-ponies-script"></script><script type="text/javascript">/* <![CDATA[ */ (function (cfg) {BrowserPonies.setBaseUrl(cfg.baseurl);BrowserPonies.loadConfig(BrowserPoniesBaseConfig);BrowserPonies.loadConfig(cfg);})({"baseurl":"https://browser.pony.house/","allowDoubleClickControl":true,"fadeDuration":500,"volume":0,"fps":25,"speed":3,"audioEnabled":false,"dontSpeak":true,"showFps":false,"showLoadProgress":true,"speakProbability":0.1,"spawn":{"fluttershy":1,"nightmare moon":1,"princess twilight sparkle":1,"rainbow dash":1},"autostart":false}); /* ]]> */</script>
+				<script>
+					$(window).on("load", function () {
+						// load saved state
+						var ponytoggle = localStorage.getItem("ponytoggle") === "true";
+
+						// function to update BrowserPonies based on toggle
+						function updatePonies() {
+							if (ponytoggle) {
+								BrowserPonies.stop();
+							} else {
+								BrowserPonies.start();
+							}
+						}
+
+						// small delay to ensure BrowserPonies is ready
+						setTimeout(updatePonies, 100); // 100ms delay
+
+						// click handler
+						$("#bt_toggleponies").click(function () {
+							ponytoggle = !ponytoggle;           // flip the toggle
+							localStorage.setItem("ponytoggle", ponytoggle);
+							updatePonies();                      // apply new state
+						});
+					});
+				</script>
+			</body>
+		</html>
