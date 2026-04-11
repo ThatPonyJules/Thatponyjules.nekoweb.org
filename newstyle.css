@@ -23,11 +23,10 @@ html {
 	height: 100%;
 }
 body {
-	background-image: url("assets/wallpaper-long.pn"),
+	background-image: url("assets/julesbgsite.png"),
 		linear-gradient(#300e3a, #210829);
 	background-size: cover;
 	background-repeat: no-repeat;
-	background-blend-mode: overlay;
 	cursor: url("Cursor.png"), auto;
 	margin: 0;
 	color: white;

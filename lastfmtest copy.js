@@ -66,23 +66,11 @@ async function getTrack() {
 
 		const playing = document.getElementById("playing");
 		playing.innerHTML = `
-      <div class="playing-wrapper">
         <img class="playing-cover" src="${escapeHtml(track.image[2]["#text"])}">
-        <div class="playing-trackInfo">
           <a href="${escapeHtml(track.url)}" target="_blank">
-            <div class="playing-marquee playing-marquee--track">
-              <div class="playing-marquee__inner playing-trackName">
                 ${escapeHtml(track.name)}
-              </div>
-            </div>
           </a>
-          <div class="playing-marquee playing-marquee--artist">
-            <div class="playing-marquee__inner playing-artistName">
               ${escapeHtml(track.artist["#text"])}
-            </div>
-          </div>
-        </div>
-      </div>
     `;
 
 		requestAnimationFrame(() => {
