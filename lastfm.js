@@ -1,104 +1,35 @@
-const USERNAME = "Julesfr__";
+// this script is under the MIT license (https://max.nekoweb.org/resources/license.txt)
+                        
+const USERNAME = "Julesfr__"; // Put your LastFM username here
 const BASE_URL = `https://lastfm-last-played.biancarosa.com.br/${USERNAME}/latest-song`;
-const listeningStatus = document.getElementById("musicstatus");
-let loaded = 0;
 
-/* escape HTML */
-function escapeHtml(str) {
-	return str
-		? str
-				.replace(/&/g, "&amp;")
-				.replace(/</g, "&lt;")
-				.replace(/>/g, "&gt;")
-				.replace(/"/g, "&quot;")
-				.replace(/'/g, "&#39;")
-		: "";
-}
+const getTrack = async () => {
+    const request = await fetch(BASE_URL);
+    const json = await request.json();
+    let status
 
-/* setup scroll animation */
-function makeMarquee(container, speed = 80) {
-	const inner = container.querySelector(".playing-marquee__inner");
-	if (!inner) return;
+    let isPlaying = json.track['@attr']?.nowplaying || false;
 
-	// reset
-	inner.style.animation = "none";
-	container
-		.querySelectorAll(".playing-marquee__clone")
-		.forEach((c) => c.remove());
-
-	const fullWidth = inner.scrollWidth;
-	const viewWidth = container.clientWidth;
-
-	// if text fits, do nothing
-	if (fullWidth <= viewWidth + 1) {
-		inner.style.transform = "none";
-		return;
-	}
-
-	// duplicate content for seamless loop
-	const clone = inner.cloneNode(true);
-	clone.classList.add("playing-marquee__clone");
-	container.appendChild(clone);
-
-	const duration = fullWidth / speed;
-	const animName = `scroll-${Math.random().toString(36).slice(2)}`;
-	const style = document.createElement("style");
-	style.textContent = `
-    @keyframes ${animName} {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-${fullWidth}px); }
+    if(!isPlaying) {
+        // Trigger if a song isn't playing
+        return;
+    } else {
+        // Trigger if a song is playing
     }
-  `;
-	document.head.appendChild(style);
 
-	[inner, clone].forEach((el) => {
-		el.style.animation = `${animName} ${duration}s linear infinite`;
-	});
-}
+    // Values:
+    // COVER IMAGE: json.track.image[1]['#text']
+    // TITLE: json.track.name
+    // ARTIST: json.track.artist['#text']
 
-/* main fetch + render */
-async function getTrack() {
-	try {
-		const req = await fetch(BASE_URL);
-		const json = await req.json();
-		const track = json.track;
-		const isPlaying = track["@attr"]?.nowplaying || false;
-
-		listeningStatus.textContent = isPlaying
-			? "Listening To"
-			: "Last Listened";
-		if (!isPlaying && loaded > 0) return;
-		loaded = isPlaying ? 0 : 1;
-
-		const playing = document.getElementById("playing");
-		playing.innerHTML = `
-      <div class="playing-wrapper">
-        <img class="playing-cover" src="${escapeHtml(track.image[2]["#text"])}">
-        <div class="playing-trackInfo">
-          <a href="${escapeHtml(track.url)}" target="_blank">
-            <div class="playing-marquee playing-marquee--track">
-              <div class="playing-marquee__inner playing-trackName">${escapeHtml(track.name)}</div>
-            </div>
-          </a>
-          <div class="playing-marquee playing-marquee--artist">
-            <div class="playing-marquee__inner playing-artistName">${escapeHtml(track.artist["#text"])}</div>
-          </div>
-        </div>
-      </div>
-    `;
-
-		const trackMarquee = playing.querySelector(".playing-marquee--track");
-		const artistMarquee = playing.querySelector(".playing-marquee--artist");
-
-		// trigger after render so widths are accurate
-		requestAnimationFrame(() => {
-			makeMarquee(trackMarquee, 100);
-			makeMarquee(artistMarquee, 80);
-		});
-	} catch (e) {
-		console.error(e);
-	}
-}
+    document.getElementById("listening").innerHTML = `
+    <img src="${json.track.image[2]['#text']}">
+    <div id="trackInfo">
+    <h3 id="trackName">${json.track.name}</h3>
+    <p id="artistName">${json.track.artist['#text']}</p>
+    </div>
+    `
+};
 
 getTrack();
-setInterval(getTrack, 5000);
+setInterval(() => { getTrack(); }, 5000);
