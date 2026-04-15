@@ -16,173 +16,19 @@
 			type="text/css"
 			media="all"
 		/>
+		<link
+			href="Window.css"
+			rel="stylesheet"
+			type="text/css"
+			media="all"
+		/>
+		<link
+			href="Sidenav.css"
+			rel="stylesheet"
+			type="text/css"
+			media="all"
+		/>
 		<style>
-			/* Window */
-			iframe {
-			display: block;
-			width: 100%;
-			}
-
-			#windowdiv {
-				position: absolute;
-				z-index: 9;
-				background-color: #a5a1ffe0;
-				text-align: center;
-				border: 4px solid #a5a1ffe0;
-				width: 100%;
-				max-width: 700px;
-				height: 100%;
-				max-height: 800px;
-				border-radius: 5px;
-
-				top: 48%;
-				left: calc(100% - 900px); /* 600px width + ~20px margin */
-				transform: translateY(-50%);
-			}
-
-			#windowdivheader {
-			padding: 5px;
-			cursor: move;
-			z-index: 10;
-			background-color: #a5a1ff;
-			color: #fff;
-
-			width: 100%;
-			box-sizing: border-box;
-			display: flex;
-			justify-content: space-between; /* pushes items apart */
-			align-items: center;            /* vertical alignment */
-			}
-
-			#divheadertext {
-				max-width:75%;
-			}
-			.iframe-wrapper {
-			width: 100%;
-			aspect-ratio: 16 / 9;   /* keeps it proportional */
-			overflow: hidden;
-			position: relative;
-			border-radius:5px;
-			}
-
-			.iframe-wrapper iframe {
-			width: 1920px;
-			height: 1080px;
-			border: none;
-
-			transform-origin: top left;
-
-			/* scale based on container width */
-			transform: scale(var(--scale, 1));
-			}
-			#reenablewindow {
-				display: none;
-			}
-
-			/* Sidebar */
-			.sidenav {
-			position: fixed;
-			left: 50px;        /* <-- detached from left */
-			top: 80px;
-			bottom: 100px;
-			width: 510px;
-			max-height: 98%;
-
-			background-color: #a5a1ff;
-			padding-top: 20px;
-
-			transform: translateX(-540px); /* fully hidden */
-			transition: transform 0.4s ease;
-
-			border-radius: 15px; /* now rounded on ALL sides */
-			box-shadow: 0 0 15px rgba(0,0,0,0.5);
-
-			}
-
-			.sidenavcontent {
-			position: absolute;
-			top: 0;
-			bottom: 0;
-			left: 0;
-			right: 0;
-
-			overflow-y: auto;
-			overflow-x: hidden;
-
-			padding-top: 20px;
-			direction: rtl;
-			padding-left: 10px;
-			}
-
-			.sidenavcontent::-webkit-scrollbar {
-			width: 8px;
-			}
-
-			.sidenavcontent::-webkit-scrollbar-thumb {
-			background: #e5e4ff;
-			border-radius: 10px;
-			}
-
-			.sidenavcontent::-webkit-scrollbar-track {
-			background: transparent;
-			}
-
-			.sidenavcontent a, p, li, img {
-			direction: ltr; /* normal text again */
-			}
-
-			/* Open state */
-			.sidenav.open {
-			transform: translateX(0);
-			}
-
-			/* Links */
-			.sidenav a {
-			padding: 10px 20px;
-			text-decoration: none;
-			font-size: 20px;
-			color: #818181;
-			display: block;
-			}
-
-			.sidenav p {
-			color: #fff
-			}
-			.sidenav a:hover {
-			color: #f1f1f1;
-			}
-
-			/* Tab button that sticks out */
-			.sidenavtoggle {
-			position: absolute;
-			right: -20px;
-			top: 0;
-			bottom: 0;              /* 👈 stretch full height */
-			height: 100%;
-			direction: ltr;
-			display: flex;
-			align-items: center;   /* 👈 center the icon vertically */
-			justify-content: center;
-
-			background: #a5a1ff;
-			color: #e5e4ff;
-			padding: 0 10px;       /* horizontal padding only */
-
-			cursor: pointer;
-
-			border-radius: 0 10px 10px 0;
-			}
-
-			.arrow {
-			display: inline-block;
-			transition: transform 0.3s ease;
-			font-size: 20px;
-			}
-
-			/* When sidebar is open, rotate arrow */
-			.sidenav.open .arrow {
-			transform: rotate(180deg);
-			}
 
 			/*Bottom bar*/
 			.taskbar {
@@ -209,6 +55,13 @@
 			padding-left: 10px;
 			padding-right: 10px;
 			margin-top: 4px;
+			}
+
+			.lastfm {
+			background-color: rgb(255, 0, 0);
+			display: block;
+			padding: 10px;
+			width: 500px;
 			}
 
 		</style>
@@ -240,6 +93,7 @@
 			</div>
 
 			<div class="sidenavcontent">
+				
 				<p>pibby</p>
 				<p>pibby</p>
 				<p>pibby</p>
@@ -261,9 +115,8 @@
 				<p>pibby</p>
 			</div>
 		</div>
-				<div id="listening"></span>
-				<div id="playing"></span>
-
+				<div id="listening"></div>
+				<div id="playing"></div>
 		<!--Taskbar-->
 		<div class="taskbar">
 			<a style="background:#0808bb" id="cornerthing">gay</a>

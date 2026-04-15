@@ -1,0 +1,109 @@
+			/* Sidebar */
+			.sidenav {
+			position: fixed;
+			left: 50px;        /* <-- detached from left */
+			top: 80px;
+			bottom: 100px;
+			width: 510px;
+			max-height: 98%;
+
+			background-color: #a5a1ff;
+			padding-top: 20px;
+
+			transform: translateX(-540px); /* fully hidden */
+			transition: transform 0.4s ease;
+
+			border-radius: 15px; /* now rounded on ALL sides */
+			box-shadow: 0 0 15px rgba(0,0,0,0.5);
+
+			}
+
+			.sidenavcontent {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+
+			overflow-y: auto;
+			overflow-x: hidden;
+
+			padding-top: 20px;
+			direction: rtl;
+			padding-left: 10px;
+			}
+
+			.sidenavcontent::-webkit-scrollbar {
+			width: 8px;
+			}
+
+			.sidenavcontent::-webkit-scrollbar-thumb {
+			background: #e5e4ff;
+			border-radius: 10px;
+			}
+
+			.sidenavcontent::-webkit-scrollbar-track {
+			background: transparent;
+			}
+
+			.sidenavcontent a, p, li {
+			direction: ltr; /* normal text again */
+			}
+
+			.sidenavcontent img {
+			display: block;
+			margin-right: auto; /* pushes it left */
+			}
+
+			/* Open state */
+			.sidenav.open {
+			transform: translateX(0);
+			}
+
+			/* Links */
+			.sidenav a {
+			padding: 10px 20px;
+			text-decoration: none;
+			font-size: 20px;
+			color: #818181;
+			display: block;
+			}
+
+			.sidenav p {
+			color: #fff
+			}
+			.sidenav a:hover {
+			color: #f1f1f1;
+			}
+
+			/* Tab button that sticks out */
+			.sidenavtoggle {
+			position: absolute;
+			right: -20px;
+			top: 0;
+			bottom: 0;              /* 👈 stretch full height */
+			height: 100%;
+			direction: ltr;
+			display: flex;
+			align-items: center;   /* 👈 center the icon vertically */
+			justify-content: center;
+
+			background: #a5a1ff;
+			color: #e5e4ff;
+			padding: 0 10px;       /* horizontal padding only */
+
+			cursor: pointer;
+
+			border-radius: 0 10px 10px 0;
+			}
+
+			.arrow {
+			display: inline-block;
+			transition: transform 0.3s ease;
+			font-size: 20px;
+			}
+
+			/* When sidebar is open, rotate arrow */
+			.sidenav.open .arrow {
+			transform: rotate(180deg);
+			}
