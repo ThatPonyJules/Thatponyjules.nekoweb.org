@@ -23,11 +23,16 @@ const getTrack = async () => {
     // ARTIST: json.track.artist['#text']
 
     document.getElementById("listening").innerHTML = `
-    <img src="${json.track.image[2]['#text']}">
-    <div id="trackInfo">
-    <h3 id="trackName">${json.track.name}</h3>
-    <p id="artistName">${json.track.artist['#text']}</p>
-    </div>
+    <flex id="lastfm">
+        <img style="float: left; border-radius: 5px;" width="50%" src="${json.track.image[3]['#text']}"/>
+        <div class="lastfm-row">
+            <input type="text">
+            <div id="lastfmtext">
+                <p id="trackName">${json.track.name}</p>
+                <p id="artistName">${json.track.artist['#text']}</p>
+            </div>
+        </div>
+    </flex>
     `
 };
 

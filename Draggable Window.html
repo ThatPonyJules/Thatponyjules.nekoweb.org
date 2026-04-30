@@ -3,7 +3,7 @@
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<script type="text/javascript" src="topbarnologo.js"></script>
-		<script type="text/javascript" src="lastfm.js"></script>
+		<script type="text/javascript" src="lasrtfmtrixie.js"></script>
 		<script type="text/javascript" src="Splashes.js"></script>
 		<style></style>
 		<meta name="darkreader-lock" />
@@ -60,10 +60,22 @@
 			#lastfm {
 			background-color: #7c77dd;
 			display: block;
-			width: 92%;
-			height: 50%;
+			width: 90%;
+			height: 220px;
 			border-radius:10px;
+			padding:15px;	
 			margin-right: auto;
+			}
+			
+			.lastfm-row {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			}
+
+			#lastfmtext {
+			width: 50%;
+			padding: 15px;
 			}
 
 		</style>
@@ -95,7 +107,7 @@
 			</div>
 
 			<div class="sidenavcontent">
-				<flex id="lastfm"><img style="float: left;" src="assets/placeholder.png"/></flex>
+				<div id="listening"></div>
 				<p>pibby</p>
 				<p>pibby</p>
 				<p>pibby</p>
@@ -155,8 +167,6 @@
 				<p>pibby</p>
 			</div>
 		</div>
-				<div id="listening"></div>
-				<div id="playing"></div>
 		<!--Taskbar-->
 		<div class="taskbar">
 			<a style="background:#0808bb" id="cornerthing">gay</a>
