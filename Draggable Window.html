@@ -3,7 +3,7 @@
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<script type="text/javascript" src="topbarnologo.js"></script>
-		<script type="text/javascript" src="lasrtfmtrixie.js"></script>
+		<script type="text/javascript" src="lastfm copy.js"></script>
 		<script type="text/javascript" src="Splashes.js"></script>
 		<style></style>
 		<meta name="darkreader-lock" />
@@ -67,7 +67,7 @@
 			margin-right: auto;
 			}
 			
-			.lastfm-row {a
+			.lastfm-row {
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
@@ -103,11 +103,15 @@
 		<!-- Sidebar -->
 		<div id="mySidenav" class="sidenav">
 			<div class="sidenavtoggle" onclick="toggleNav()">
-				<span class="arrow" style="transform: scaleY(5) scaleX(2);">➤</span>
+				<span class="arrow" style="transform: scaleY(5) scaleX(2) translateX(7px); ">➤</span>
 			</div>
 
 			<div class="sidenavcontent">
-				<div id="listening"></div>
+				<span
+				style="font-size:20px;"
+				id="musicstatus"
+				></span>
+				<span id="listening"></span>
 				<p>pibby</p>
 				<p>pibby</p>
 				<p>pibby</p>

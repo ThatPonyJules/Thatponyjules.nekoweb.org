@@ -26,9 +26,8 @@ const getTrack = async () => {
     <flex id="lastfm">
         <img style="float: left; border-radius: 5px;" width="50%" src="${json.track.image[3]['#text']}"/>
         <div class="lastfm-row">
-            <input type="text">
             <div id="lastfmtext">
-                <p id="trackName">${json.track.name}</p>
+                <a href="${json.track.url}">${json.track.name}</a>
                 <p id="artistName">${json.track.artist['#text']}</p>
             </div>
         </div>
