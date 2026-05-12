@@ -62,21 +62,7 @@
 
 			/* Links */
 			.sidenav a {
-			padding: 10px 20px;
-			text-decoration: none;
-			font-size: 20px;
-			color: #818181;
 			display: block;
-			}
-
-			.sidenav p {
-			color: #fff
-			}
-			.sidenav a:hover {
-			color: #ff0606;
-			}
-			.sidenav a {
-			color: #3700ff;
 			}
 
 			/* Tab button that sticks out */
