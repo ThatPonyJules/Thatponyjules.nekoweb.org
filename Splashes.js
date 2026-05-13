@@ -539,4 +539,4 @@ Build up our machine, you die tonight`,
 selectedsplash = splashes[Math.floor(Math.random() * splashes.length)];
 
 document.getElementById("splash").textContent = selectedsplash;
-document.title = selectedsplash;
+document.title = "ThatPonyJules | " + selectedsplash;
