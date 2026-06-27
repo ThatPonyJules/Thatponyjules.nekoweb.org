@@ -40,7 +40,7 @@
 			}
 			.iframe-wrapper {
 			width: 100%;
-			aspect-ratio: 16 / 9;   /* keeps it proportional */
+			/* aspect-ratio: 16 / 9;   /* keeps it proportional */
 			overflow: hidden;
 			position: relative;
 			border-radius:5px;
@@ -48,7 +48,7 @@
 
 			.iframe-wrapper iframe {
 			width: 1920px;
-			height: 1080px;
+			height: 2000px;
 			border: none;
 
 			transform-origin: top left;

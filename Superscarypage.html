@@ -2,45 +2,314 @@
 <html>
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-		<script type="text/javascript" src="Splashes.js"></script>
 		<style></style>
 		<meta name="darkreader-lock" />
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Superscarypage.html</title>
         <style>
-            .segment {
-                display: flex;
-                background-color: #ff0000;
-                margin: 30px;
-                border-radius: 25px;
+
+            @font-face {
+                font-family: Frag-Mono;
+                src: url("FragmentMono-Regular.ttf");
             }
-            .segmentcontent {
+            @font-face {
+                font-family: Frag-Mono;
+                font-weight: normal;
+                font-style: italic;
+                src: url("FragmentMono-Italic.ttf");
+            }
+
+            body {
+                transform: translateX(-7px);
+                overflow-x: hidden;
+            }
+
+            .abtlink:link {
+                color: #000000;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            .abtlink:visited {
+                color: #000;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            .abtlink:hover {
+                color: #ad5bfa;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            .abtlink:active {
+                color: #551a8b;
+                background-color: transparent;
+                text-decoration: none;
+            }
+            
+            .topsegment {
+                display: block;
+                background-image:url("https://avatar-cyan.vercel.app/api/banner/852018491900821514/image");
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: cover;
+                width: 1850px;
+                margin: 30px 30px 0px 30px;
+                border-radius: 25px 25px 0px 0px;
+                overflow: hidden;
+            }
+            .midsegment {
+                display: inline-block;
+                background-color: #c2c3ff;
+                width: 1850px;
+                height: 800px;
+                margin: 30px;
+                border-radius: 0px 0px 25px 25px;
+                transform: translateY(-30px);
+            }
+            .subsequentsegment {
+                display: inline-block;
+                background-color: #c2c3ff;
+                width: 1850px;
+                height: 1500px;
+                margin: 30px;
+                border-radius:25px;
+                transform: translateY(-250px);
+            }
+            .topsegmentcontent {
                 display: block;
                 padding: 10px;
             }
+            .midsegmentcontent {
+                display: block;
+                font-size: 50px;
+                margin: 45px;
+                font-family: frag-mono;
+            }
+            .subsequentsegmentcontent {
+                display: block;
+                font-size: 50px;
+                margin: 45px;
+                font-family: frag-mono;
+            }
             .profilepicturecontainer {
                 display: flex;
-                background-color:#00ff00;
+                background-color:#9375ff;
                 float: left;
-                margin:30px;
+                margin:100px;
                 border-radius: 15px;
+                transform: translateY(-25px);
             }
             .profilepicture {
                 padding: 15px;
                 border-radius: 25px;
             }
-            </style>
+            .nameplate {
+                background-color: #c2c3ff;
+                border-radius: 15px;
+                display: inline-flex;
+                padding: 35px;
+                font-size: 60px;
+                font-family: frag-mono;
+                transform: translateY(45px);
+                color: #6e6bd3;
+            }
+            .pronplate {
+                background-color: #c2c3ff;
+                border-radius: 15px;
+                display: inline-flex;
+                padding: 35px;
+                font-size: 45px;
+                font-family: frag-mono;
+                transform: translateY(-45px);
+                color: #6e6bd3;
+            }
+            .splashplate {
+                background-color: #c2c3ff;
+                border-radius: 15px;
+                width: 700px;
+                display: inline-flex;
+                padding: 35px;
+                font-size: 45px;
+                font-family: frag-mono;
+                color: #6e6bd3;
+                transform: translateY(-1300px) translateX(709px);
+                overflow: wrap;
+            }
+            .btn-group button {
+                background-color: #c2c3ff; /* Green background */
+                border: none; /* Green border */
+                color: white; /* White text */
+                cursor: pointer; /* Pointer/hand icon */
+                float: left; /* Float the buttons side by side */
+                padding:10px;
+                margin: 0px 5px;
+                border-radius: 5px;
+                float: right;
+                transform: translateY(40px) translateX(-50px);
+            }            
+
+            .marquee {
+                display: flex ;
+                overflow: hidden ;
+                white-space: nowrap ;
+                width: 1850px ;
+                transform: translateX(-45px);
+            }
+            .marquee__item {
+                animation-duration: 12s;
+                animation-iteration-count: infinite ;
+                animation-name: marquee-content ;
+                animation-timing-function: linear ;
+                padding: 5px 15px 5px 15px ;
+            }
+            @keyframes marquee-content {
+                from {
+                    transform: translateX( 0% );
+                }
+                to {
+                    transform: translateX( -100% );
+                }
+		    }
+            .fade-edges {
+			  -webkit-mask-image: -webkit-linear-gradient(left, transparent, black 10%, black 90%, transparent);
+			  mask-image: -moz-linear-gradient(left, transparent, black 10%, black 90%, transparent);
+			  mask-image: -o-linear-gradient(left, transparent, black 10%, black 90%, transparent);
+			  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+			}
+        </style>
 	</head>
 	<body>
-        <div class="segment">
-            <div class="segmentcontent">
-                <div class="profilepicturecontainer">
-                    <img class="profilepicture" src="/assets/placeholder.png">
+        <div class="topsegment">
+            <div style="background-color: #a5a1ff80; height: 750px;">
+                <div class="topsegmentcontent">
+                    <div class="profilepicturecontainer">
+                        <img class="profilepicture" src="https://avatar-cyan.vercel.app/api/pfp/852018491900821514/bigimage" height="512px">
+                    </div>
+                    <p class="nameplate" id="username"></p>
+                    <br/>
+                    <p class="pronplate">⚧🌈She/Doe/Bat/They/It🦋⚧</p>
+                    <br/>
+                    <div class="btn-group">
+                        <button style="border-radius: 10px;"><a href="https://discord.com/users/852018491900821514" target="_"><img src="/profile.png" width="125px" height="125px"/></a></button>
+                    </div>
                 </div>
-                <p style="font-size: 50px;">haiii</p>
             </div>
         </div>
-        
+        <div class="midsegment">
+            <div class="midsegmentcontent">
+                <p style="font-size: 65px;">About</p>
+                <p>
+                    Hai there! I'm Jules! <br>
+                    I make music and art sometimes,, aba
+                </p>
+                <p style="transform: translateY(-50px);" id="timezone">help</p>
+                <p style="transform: translateY(-100px);">
+                    I am a minor from minortown<br>
+                    "<a class="abtlink" style="text-decoration: underline;" href="https://vyletpony.bandcamp.com/album/im-creekflow" target="_">I'm Creekflow</a>" by <a class="abtlink" style="text-decoration: underline;" href="https://www.vyletpony.com/" target="_">Vylet Pony</a> was kinda my fault sobs <br>
+                    I'm co-directing an FNF mod for it so idk <br>
+                    Clicking on some blinkees, badges, and stamps might do something or send you somewhere :3<
+                </p>
+                <p style="text-align: right; font-size: 35px; transform: translateY(-125px); opacity: 75%; color: #6e6bd3;">splashes are mainly quotes from my friend server</p>
+                <p class="splashplate" id="splash"></p>
+            </div>
+        </div>
+        <div class="subsequentsegment" style="height: 1000px;">
+            <div class="subsequentsegmentcontent">
+                <br>
+                <div class="marquee fade-edges">
+                    <div class="marquee__item">
+                        <img src="/assets/Badges/Jules.png" width="264px">
+                        <img src="/assets/Badges/nova.gif" width="264px">
+                        <img src="/assets/Badges/starfield.gif" width="264px">
+                        <img src="https://dexterdaybreaker.neocities.org/Images/ButtonLogo.png" width="264px">
+                        <img src="https://shadthecheese.neocities.org/buttons/button.png" width="264px">
+                        <img src="/assets/Badges/Nekoweb.gif" width="264px">
+                        <img src="/assets/Badges/piracy.gif" width="264px">
+                        <img src="/assets/Badges/TRAHU.gif" width="264px">
+                        <img src="/assets/Badges/Transbian.png" width="264px">
+                        <img src="/assets/Badges/tyg.gif" width="264px">
+                        <img src="/assets/Badges/unknown_003.png" width="264px">
+                        <img src="/assets/Badges/minecraft.gif" width="264px">
+                        <img src="/assets/Badges/Y2K.png" width="264px">
+                    </div>
+                    <!--
+                        Duplication of the content in order to create a seamless wrapping simulation.
+                        As the element ABOVE heads off screen-left, the element BELOW will enter
+                        screen-right.
+                    -->
+                    <div class="marquee__item">
+                        <img src="/assets/Badges/Jules.png" width="264px">
+                        <img src="/assets/Badges/nova.gif" width="264px">
+                        <img src="/assets/Badges/starfield.gif" width="264px">
+                        <img src="https://dexterdaybreaker.neocities.org/Images/ButtonLogo.png" width="264px">
+                        <img src="https://shadthecheese.neocities.org/buttons/button.png" width="264px">
+                        <img src="/assets/Badges/Nekoweb.gif" width="264px">
+                        <img src="/assets/Badges/piracy.gif" width="264px">
+                        <img src="/assets/Badges/TRAHU.gif" width="264px">
+                        <img src="/assets/Badges/Transbian.png" width="264px">
+                        <img src="/assets/Badges/tyg.gif" width="264px">
+                        <img src="/assets/Badges/unknown_003.png" width="264px">
+                        <img src="/assets/Badges/minecraft.gif" width="264px">
+                        <img src="/assets/Badges/Y2K.png" width="264px">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            const apiUrl = "https://avatar-cyan.vercel.app/api/user/852018491900821514/raw"
+            async function fetchDisplayName() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                const displayName = data.display_name;
+                document.getElementById("username").textContent = displayName;
+            }
+            
+            catch (error) {
+                console.error(error);
+                document.getElementById("username").textContent = "ccouldnt pull username :(";
+            }
+        }
+        fetchDisplayName();
+
+        </script>
+		<script type="text/javascript" src="Splashes.js"></script>
+        <script>
+            const offsetMinutes = new Date().getTimezoneOffset();
+
+            const aboutseg = document.getElementById("timezone")
+            
+            const offsetHours = offsetMinutes / 60
+            
+            function getNYOffsetInMinutes() {
+              const date = new Date();
+              const nyString = date.toLocaleString('en-US', { timeZone: 'America/New_York' });
+              const utcString = date.toLocaleString('en-US', { timeZone: 'UTC' });
+              const diffInMs = new Date(nyString) - new Date(utcString);
+              return -(diffInMs / 60000);
+            }
+            
+			const Julestimezone = -(getNYOffsetInMinutes()) / 60
+            const timediff = Julestimezone + offsetHours
+
+            function timeshit() {
+            if (timediff == 0) {
+                aboutseg.innerHTML = "We're in the same Timezone!"
+                console.log("Same Timezone")
+            }
+            else {
+                if (Math.sign(timediff) == 1) {
+                    var abstimediff = Math.abs(timediff)
+                    aboutseg.innerHTML = "You're " + abstimediff + " hours behind me"
+                    console.log("Viewer is Behind Jules by " + abstimediff + " hours")
+                } else {
+                    var abstimediff = Math.abs(timediff)
+                    aboutseg.innerHTML = "You're " + abstimediff + " hours ahead of me"
+                    console.log("Viewer is Ahead of Jules by " + abstimediff + " hours")
+                }
+            }};
+
+            timeshit();
+        </script>
 	</body>
 </html>

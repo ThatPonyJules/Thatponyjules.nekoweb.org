@@ -23,10 +23,8 @@ async function getTrack() {
 		let musicstate = "bad code idiot";
 
 		if(!isPlaying) {
-			console.log("last listened to");
 			musicstate = "Last Listened to";
 		} else {
-			console.log("listing atm");
 			musicstate = "Listening to";
 		}
 
@@ -44,7 +42,6 @@ async function getTrack() {
         	</div>
 		</div>
     `;
-		console.log(track.name)
 
 	} catch (e) {
 		console.error(e);

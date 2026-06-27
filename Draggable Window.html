@@ -32,50 +32,76 @@
 
 			/*Bottom bar*/
 			.taskbar {
-			overflow: hidden;
-			background-color: #a5a1ff50;
-			position: fixed;
-			bottom: 0;
-			width: 100%;
+				overflow: hidden;
+				background-color: #a5a1ff50;
+				position: fixed;
+				bottom: 0;
+				width: 100%;
 			}
 
 			.taskbar a {
-			float: left;
-			display: block;
-			color: #f2f2f2;
-			text-align: center;
-			padding:10px 10px;
-			text-decoration: none;
-			font-size: 17px;
+				float: left;
+				display: block;
+				color: #f2f2f2;
+				text-align: center;
+				padding:10px 10px;
+				text-decoration: none;
+				font-size: 17px;
 			} 
 
 			.taskbar input {
-			float: left;
-			display: flex;
-			padding-left: 10px;
-			padding-right: 10px;
-			margin-top: 4px;
+				float: left;
+				display: flex;
+				padding-left: 10px;
+				padding-right: 10px;
+				margin-top: 4px;
 			}
 
 			#lastfm {
-			background-color: #7c77dd;
-			display: block;
-			width: 90%;
-			height: 220px;
-			border-radius:10px;
-			padding:15px;	
-			margin-right: auto;
+				background-color: #7c77dd;
+				display: block;
+				width: 90%;
+				height: 220px;
+				border-radius:10px;
+				padding:15px;	
+				margin-right: auto;
+			}
+
+			.socialscontainer {
+				background-color: #7c77dd;
+				display: block;
+				width: 90%;
+				border-radius:10px;
+				padding:15px;	
+				margin-right: auto;
+				margin-top: 15px;
+				line-height: 0.8;
+			}
+
+			.interestscontainer {
+				background-color: #7c77dd;
+				display: block;
+				width: 90%;
+				border-radius:10px;
+				padding:15px;	
+				margin-right: auto;
+				margin-top: 15px;
+				line-height: 1.5;
+			}
+
+			.sidebartext {
+				transform: translateX(20px);
 			}
 			
 			.lastfm-row {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
 			}
 
 			#lastfmtext {
-			width: 100%;
-			padding:0px;
+				width: 100%;
+				padding:0px;
 			}
 
 		</style>
@@ -108,63 +134,66 @@
 
 			<div class="sidenavcontent">
 				<span id="playing"></span>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
-				<p>pibby</p>
+				<div class="socialscontainer">
+					<!--<p>Strawpage</p> put on own seg on superscarypage -->
+					<p style="font-size: 30px;">Links</p>
+					<div class="sidebartext">
+						<p><a href="https://x.com/ThatPonyJules">Twitter</a><br>
+						<a href="https://www.youtube.com/@ThatPonyJules">Youtube</a><br>
+						<a href="https://bsky.app/profile/thatponyjules.bsky.social">Bluesky</a><br>
+						<a href="https://thatponyjules.tumblr.com">Tumblr</a><br>
+						<a href="https://www.instagram.com/thatponyjules/">Instagram</a><br>
+						<a href="https://artfight.net/~ThatPonyJules">Artfight</a><br>
+						<a href="https://www.twitch.tv/thatponyjules">Twitch</a><br>
+						<a href="https://www.last.fm/user/Julesfr__">LastFM</a><br>
+						<a href="https://steamcommunity.com/profiles/76561199434504564/">Steam</a><br>
+						<a href="https://www.tiktok.com/@thatponyjules">TikTok</a><br>
+						<a href="https://soundcloud.com/thatponyjules">SoundCloud</a></p>
+					</div>
+				</div>
+				<div class="interestscontainer">
+					<p style="font-size: 30px;">Interests</p>
+						<p style="font-size: 20px;">General</p>
+						<p class="sidebartext">
+							Girls (don't hmu anymore im taken)<br>
+							My Girlfriend<br>
+							Art<br>
+							Music<br>
+							Deer<br>
+							Bats<br>
+						</p>
+						<p style="font-size: 20px;">Music</p>
+						<p class="sidebartext">
+							Vylet Pony<br>
+							Tracey Brakes<br>
+							Ada Rook<br>
+							Underscores<br>
+							r u s s e l b u c k<br>
+							Femtanyl<br>
+							Azure Comet<br>
+							Ranipla<br>
+							Violet_Dash<br>
+							5L
+						</p>
+						<p style="font-size: 20px;">Shows</p>
+						<p class="sidebartext">
+							My Little Pony: Friendship is Magic<br>
+							(IDK what else,, I watch YT mainly)
+						</p>
+						<p style="font-size: 20px;">Games</p>
+						<p class="sidebartext">
+							Minecraft<br>
+							Celeste<br>
+							Baldi<br>
+							Peak<br>
+							Haste<br>
+							R.E.P.O<br>
+							Friday Night Funkin'<br>
+							Monster Cards<br>
+							Portal
+						</p>
+				</div>
+				<br>
 			</div>
 		</div>
 		<!--Taskbar-->
@@ -202,8 +231,7 @@
 				navscale = navscale * 0.25
 				navscale = navscale - (navscale * 2);
 				navscale += 20;
-				Math.floor(navscale)
-				console.log(navscale);
+				Math.floor(navscale);
 			});
 
 
