@@ -5,6 +5,7 @@
 			}
 
 			#windowdiv {
+			overflow:hidden;
 			position: absolute;
 			z-index: 9;
 			background-color: #a5a1ffe0;
