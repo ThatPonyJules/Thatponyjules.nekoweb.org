@@ -40,6 +40,9 @@ async function getTrack() {
 						<div class="marquee__item">
 							<a href="${escapeHtml(track.url)}" style="font-size:20px">${escapeHtml(track.name)}</a>
 						</div>
+						<div class="marquee__item">
+							<a href="${escapeHtml(track.url)}" style="font-size:20px">${escapeHtml(track.name)}</a>
+						</div>
         	        </div>
 					<p id="artistName">${escapeHtml(track.artist["#text"])}</p>
         	    </div>

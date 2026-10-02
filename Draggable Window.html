@@ -3,7 +3,7 @@
 	<head>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 		<script type="text/javascript" src="topbarnologo.js"></script>
-		<script type="text/javascript" src="LastFMdisplay.js"></script>
+		<script type="text/javascript" src="OldLastfm.js"></script>
 		<script type="text/javascript" src="Splashes.js"></script>
 		<style></style>
 		<meta name="darkreader-lock" />
@@ -107,19 +107,21 @@
 			/* last fm marquee test */
 
             .marquee {
-                display: flex ;
+                display: flex;
                 overflow: hidden ;
                 white-space: nowrap ;
-                width: 100% ;
+                width: 300px;
                 transform: translateX(-45px);
             }
             .marquee__item {
-                animation-duration: 12s;
+                animation-duration: 6s;
                 animation-iteration-count: infinite ;
                 animation-name: marquee-content ;
                 animation-timing-function: linear ;
                 padding: 5px 15px 5px 15px ;
             }
+
+			
             @keyframes marquee-content {
                 from {
                     transform: translateX( 0% );
@@ -128,7 +130,6 @@
                     transform: translateX( -100% );
                 }
 		    }
-
 
 		</style>
 	</head>
@@ -231,6 +232,13 @@
 				src="favicon-32x32.png"
 				height="5%"
 				id="reenablewindow"
+			/>
+			<input
+				type="image"
+				src="favicon-32x32.png"
+				height="5%"
+				style="filter: sepia(100%);"
+				id="atabookwindow"
 			/>
 			<!--Toggle Ponies-->
 			<input

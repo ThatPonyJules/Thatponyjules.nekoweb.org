@@ -155,14 +155,20 @@
                 width: 1850px ;
                 transform: translateX(-45px);
             }
-            .marquee__item {
-                animation-duration: 12s;
+            .marquee__item-ltr {
+                animation-duration: 18s;
                 animation-iteration-count: infinite ;
-                animation-name: marquee-content ;
+                animation-name: marquee-content-ltr ;
                 animation-timing-function: linear ;
                 padding: 5px 15px 5px 15px ;
             }
-            @keyframes marquee-content {
+            .marqueebutton {
+				background-color: transparent;
+				border: none;
+				padding: 0;
+				cursor: pointer;
+			}
+            @keyframes marquee-content-ltr {
                 from {
                     transform: translateX( 0% );
                 }
@@ -176,6 +182,16 @@
 			  mask-image: -o-linear-gradient(left, transparent, black 10%, black 90%, transparent);
 			  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 			}
+
+			.grow {
+			  transition: transform 0.2s;
+			}
+
+			.grow:hover {
+			  transform: scale(1.1);
+              cursor: pointer;
+			}
+
         </style>
 	</head>
 	<body>
@@ -213,18 +229,26 @@
                 <p class="splashplate" id="splash"></p>
             </div>
         </div>
+        <div class="subsequentsegment" id="julesseg" style="height: 320px;">
+            <div class="subsequentsegmentcontent">
+                <div style="margin-left:auto;margin-right:auto;margin-top:80px;width:fit-content">
+                    <img src="assets/Badges/Jules.png" width="324px" style="padding:10px;">
+                    <textarea readonly style="font-size:40px;resize:none" rows="3" cols="42">https://thatponyjules.nekoweb.org/assets/Badges/Jules.png</textarea>
+                </div>
+            </div>
+        </div>
         <div class="subsequentsegment" style="height: 1000px;">
             <div class="subsequentsegmentcontent">
                 <br>
                 <div class="marquee fade-edges">
-                    <div class="marquee__item">
-                        <img src="/assets/Badges/Jules.png" width="264px">
-                        <img src="/assets/Badges/nova.gif" width="264px">
-                        <img src="/assets/Badges/starfield.gif" width="264px">
-                        <img src="https://dexterdaybreaker.neocities.org/Images/ButtonLogo.png" width="264px">
-                        <img src="https://shadthecheese.neocities.org/buttons/button.png" width="264px">
-                        <img src="/assets/Badges/Nekoweb.gif" width="264px">
-                        <img src="/assets/Badges/piracy.gif" width="264px">
+                    <div class="marquee__item-ltr">
+                        <button type="button" onclick='togglejules()' class="marqueebutton grow"><img src="/assets/Badges/Jules.png" width="264px"></button>
+                        <button type="button" onclick='window.open("https://novassite.net/", "_blank")' class="marqueebutton grow"><img src="/assets/Badges/nova.gif" width="264px"></button>
+                        <button type="button" onclick='window.open("https://starfield.nekoweb.org/", "_blank")' class="marqueebutton grow"><img src="/assets/Badges/starfield.gif" width="264px"></button>
+                        <button type="button" onclick='window.open("https://dexterdaybreaker.neocities.org/", "_blank")' class="marqueebutton grow"><img src="https://dexterdaybreaker.neocities.org/Images/ButtonLogo.png" width="264px"></button>
+                        <button type="button" onclick='window.open("https://shadthecheese.neocities.org/", "_blank")' class="marqueebutton grow"><img src="https://shadthecheese.neocities.org/buttons/button.png" width="264px"></button>
+                        <img src="/assets/Badges/Nekoweb.gif" class="grow" width="264px">
+                        <button type="button" onclick='window.open("https://thatponyjules.nekoweb.org/About/arghh", "_top")' class="marqueebutton grow"><img src="assets/Badges/piracy.gif" width="264px"></button>
                         <img src="/assets/Badges/TRAHU.gif" width="264px">
                         <img src="/assets/Badges/Transbian.png" width="264px">
                         <img src="/assets/Badges/tyg.gif" width="264px">
@@ -237,14 +261,14 @@
                         As the element ABOVE heads off screen-left, the element BELOW will enter
                         screen-right.
                     -->
-                    <div class="marquee__item">
-                        <img src="/assets/Badges/Jules.png" width="264px">
-                        <img src="/assets/Badges/nova.gif" width="264px">
-                        <img src="/assets/Badges/starfield.gif" width="264px">
-                        <img src="https://dexterdaybreaker.neocities.org/Images/ButtonLogo.png" width="264px">
-                        <img src="https://shadthecheese.neocities.org/buttons/button.png" width="264px">
-                        <img src="/assets/Badges/Nekoweb.gif" width="264px">
-                        <img src="/assets/Badges/piracy.gif" width="264px">
+                    <div class="marquee__item-ltr">
+                        <button type="button" onclick='togglejules()' class="marqueebutton grow"><img src="/assets/Badges/Jules.png" width="264px"></button>
+                        <button type="button" onclick='window.open("https://novassite.net/", "_blank")' class="marqueebutton grow"><img src="/assets/Badges/nova.gif" width="264px"></button>
+                        <button type="button" onclick='window.open("https://starfield.nekoweb.org/", "_blank")' class="marqueebutton grow"><img src="/assets/Badges/starfield.gif" width="264px"></button>
+                        <button type="button" onclick='window.open("https://dexterdaybreaker.neocities.org/", "_blank")' class="marqueebutton grow"><img src="https://dexterdaybreaker.neocities.org/Images/ButtonLogo.png" width="264px"></button>
+                        <button type="button" onclick='window.open("https://shadthecheese.neocities.org/", "_blank")' class="marqueebutton grow"><img src="https://shadthecheese.neocities.org/buttons/button.png" width="264px"></button>
+                        <img src="/assets/Badges/Nekoweb.gif" class="grow" width="264px">
+                        <button type="button" onclick='window.open("https://thatponyjules.nekoweb.org/About/arghh", "_top")' class="marqueebutton grow"><img src="assets/Badges/piracy.gif" width="264px"></button>
                         <img src="/assets/Badges/TRAHU.gif" width="264px">
                         <img src="/assets/Badges/Transbian.png" width="264px">
                         <img src="/assets/Badges/tyg.gif" width="264px">
@@ -253,6 +277,8 @@
                         <img src="/assets/Badges/Y2K.png" width="264px">
                     </div>
                 </div>
+                <p>hi</p>
+
             </div>
         </div>
         <script>
@@ -310,6 +336,25 @@
             }};
 
             timeshit();
+        </script>
+
+        <script>
+            function togglejules() {
+                const julesseg = document.getElementById("julesseg");
+                if (julesseg.style.display === "none") {
+                    julesseg.style.display = "block";
+                } else {
+                    julesseg.style.display = "none";
+                }
+            }
+        </script>
+
+        <script>
+            const julesseg = document.getElementById("julesseg");
+            function startup() {
+                julesseg.style.display = "none";
+            }
+            startup();
         </script>
 	</body>
 </html>
