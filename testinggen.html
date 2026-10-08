@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#300e3a">
+<title>Now Playing</title>
+<style>
+  @font-face {
+	font-family: Frag-Mono;
+	src: url("FragmentMono-Regular.ttf");
+  }
+
+  :root {
+	color-scheme: dark;
+	--plum: #300e3a;
+	--deep-plum: #210829;
+	--lavender: #a5a1ff;
+	--violet: #7c77dd;
+	--soft-lavender: #e5e4ff;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body { min-height: 100%; }
+
+  body {
+	margin: 0;
+	min-height: 100vh;
+	color: white;
+	font-family: "Frag-Mono", "Courier New", monospace;
+	background: url("assets/julesbgsite.png") center / cover no-repeat fixed,
+	  linear-gradient(var(--plum), var(--deep-plum));
+  }
+
+  .music-drawer {
+	position: fixed;
+	z-index: 10;
+	left: 0;
+  top: 80px;
+  bottom: 100px;
+	width: min(350px, calc(100vw - 54px));
+  transform: translateX(-100%);
+	transition: transform 360ms cubic-bezier(.2, .75, .25, 1);
+	filter: drop-shadow(0 10px 24px rgba(12, 4, 20, .42));
+  }
+
+  .music-drawer.is-open {
+  transform: translateX(0);
+  }
+
+  .drawer-toggle {
+	position: absolute;
+	top: 0;
+	right: -54px;
+	width: 54px;
+	height: 100%;
+	min-height: 142px;
+	display: grid;
+	place-items: center;
+	padding: 0;
+	border: 1px solid rgba(229, 228, 255, .45);
+	border-left: 0;
+	border-radius: 0 12px 12px 0;
+	background: var(--lavender);
+	color: var(--deep-plum);
+	cursor: pointer;
+  }
+
+  .drawer-toggle:hover { background: var(--soft-lavender); }
+
+  .drawer-toggle:focus-visible {
+	outline: 3px solid white;
+	outline-offset: 3px;
+  }
+
+  .toggle-arrow {
+	display: block;
+	font-size: 23px;
+	line-height: 1;
+	transition: transform 260ms ease;
+  }
+
+  .music-drawer.is-open .toggle-arrow { transform: rotate(180deg); }
+
+  .drawer-panel {
+	height: 100%;
+  overflow-y: auto;
+	padding: 13px;
+	border: 1px solid rgba(229, 228, 255, .52);
+  border-radius: 0;
+	background: rgba(48, 14, 58, .94);
+	backdrop-filter: blur(12px);
+  scrollbar-color: var(--lavender) transparent;
+  }
+
+  .sidebar-box {
+  margin: 0 0 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(124, 119, 221, .82);
+  }
+
+  .sidebar-box:last-child { margin-bottom: 0; }
+
+  #playing {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  margin-bottom: 0;
+  padding-bottom: 12px;
+  background: rgba(48, 14, 58, .98);
+  }
+
+  #playing::before {
+  position: absolute;
+  top: -13px;
+  right: -13px;
+  left: -13px;
+  height: 13px;
+  background: rgba(48, 14, 58, .98);
+  content: "";
+  pointer-events: none;
+  }
+
+  .drawer-panel.is-scrolled #playing::after {
+  position: absolute;
+  right: -13px;
+  bottom: -12px;
+  left: -13px;
+  height: 24px;
+  background: linear-gradient(to bottom, rgba(48, 14, 58, 1), rgba(48, 14, 58, 0));
+  content: "";
+  pointer-events: none;
+  }
+
+  .sidebar-box-title {
+  margin: 0 0 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.3;
+  }
+
+  .sidebar-link-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  }
+
+  .sidebar-box a {
+  color: var(--soft-lavender);
+  text-decoration: none;
+  }
+
+  .sidebar-box a:hover { color: white; text-decoration: underline; }
+
+  .interest-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 14px;
+  }
+
+  .interest-group h3 {
+  margin: 0 0 5px;
+  color: var(--soft-lavender);
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 1.35;
+  }
+
+  .interest-group ul {
+  margin: 0;
+  padding-left: 16px;
+  font-size: 12px;
+  line-height: 1.5;
+  }
+
+  .drawer-heading {
+	margin: 0 0 10px;
+	color: var(--soft-lavender);
+	font-size: 12px;
+	font-weight: normal;
+	letter-spacing: 0;
+	text-transform: uppercase;
+  }
+
+  .song-display {
+	display: grid;
+	grid-template-columns: 104px minmax(0, 1fr);
+	gap: 13px;
+	align-items: center;
+	min-height: 104px;
+	padding: 10px;
+	border-radius: 8px;
+	background: rgba(124, 119, 221, .82);
+  }
+
+  .album-art {
+	display: block;
+	width: 104px;
+	aspect-ratio: 1;
+	border-radius: 5px;
+	object-fit: cover;
+	background: linear-gradient(145deg, var(--lavender), var(--deep-plum));
+  }
+
+  .song-info { min-width: 0; }
+
+  .song-status {
+	display: flex;
+	align-items: center;
+	gap: 7px;
+	margin: 0 0 10px;
+	color: var(--soft-lavender);
+	font-size: 11px;
+	line-height: 1.3;
+  }
+
+  .status-dot {
+	width: 7px;
+	height: 7px;
+	flex: 0 0 7px;
+	border-radius: 50%;
+	background: #c6c3ff;
+  }
+
+  .song-status[data-playing="true"] .status-dot {
+	background: #8dffc0;
+	box-shadow: 0 0 8px rgba(141, 255, 192, .75);
+  }
+
+  .marquee {
+	width: 100%;
+	overflow: hidden;
+	white-space: nowrap;
+  }
+
+  .marquee-track {
+	display: flex;
+	width: max-content;
+	transform: translateX(0);
+	will-change: transform;
+  }
+
+  .marquee-item {
+	display: block;
+	flex: 0 0 auto;
+	width: max-content;
+	padding-right: 30px;
+	white-space: nowrap;
+  }
+
+  .track-title {
+	margin: 0 0 6px;
+	color: white;
+	font-size: 15px;
+	font-weight: bold;
+	line-height: 1.25;
+  }
+
+  .track-title a { color: inherit; text-decoration: none; }
+  .track-title a:hover { text-decoration: underline; }
+
+  .track-artist {
+	margin: 0;
+	color: var(--soft-lavender);
+	font-size: 12px;
+	line-height: 1.3;
+  }
+
+  .marquee.is-scrolling .marquee-track {
+	animation: marquee-scroll var(--marquee-duration) linear infinite;
+  }
+
+  @keyframes marquee-scroll {
+	from { transform: translateX(0); }
+	to { transform: translateX(-50%); }
+  }
+
+  .loading-message {
+	margin: 0;
+	color: var(--soft-lavender);
+	font-size: 12px;
+	line-height: 1.5;
+  }
+
+  @media (max-width: 420px) {
+	.music-drawer { width: min(330px, calc(100vw - 50px)); }
+	.drawer-toggle { right: -50px; width: 50px; }
+	.song-display { grid-template-columns: 86px minmax(0, 1fr); gap: 10px; }
+	.album-art { width: 86px; }
+	.drawer-panel { padding: 11px; }
+  #playing::before { top: -11px; right: -11px; left: -11px; height: 11px; }
+  .drawer-panel.is-scrolled #playing::after { right: -11px; left: -11px; bottom: -12px; }
+  .sidebar-box { padding: 10px; }
+  .interest-grid { gap: 10px; }
+  }
+
+  @media (max-height: 600px) {
+	.music-drawer { top: 12px; bottom: 72px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+	.music-drawer, .toggle-arrow { transition: none; }
+	.marquee.is-scrolling .marquee-track { animation-duration: 30s; }
+  }
+</style>
+</head>
+<body>
+  <aside class="music-drawer" id="musicDrawer" aria-label="Now playing sidebar">
+    <button class="drawer-toggle" id="drawerToggle" type="button" aria-expanded="false" aria-controls="songPanel" aria-label="Open music sidebar">
+      <span class="toggle-arrow" aria-hidden="true">➤</span>
+    </button>
+    <section class="drawer-panel" id="songPanel" aria-live="polite">
+      <div id="playing"><p class="loading-message">Loading song...</p></div>
+      <!-- Duplicate a sidebar-box section to add another content box. -->
+      <section class="sidebar-box" aria-labelledby="linksHeading">
+        <h2 class="sidebar-box-title" id="linksHeading">Links</h2>
+        <ul class="sidebar-link-list">
+          <li><a href="https://x.com/ThatPonyJules">Twitter</a></li>
+          <li><a href="https://www.youtube.com/@ThatPonyJules">YouTube</a></li>
+          <li><a href="https://bsky.app/profile/thatponyjules.bsky.social">Bluesky</a></li>
+          <li><a href="https://thatponyjules.tumblr.com">Tumblr</a></li>
+          <li><a href="https://www.instagram.com/thatponyjules/">Instagram</a></li>
+          <li><a href="https://artfight.net/~ThatPonyJules">Art Fight</a></li>
+          <li><a href="https://www.twitch.tv/thatponyjules">Twitch</a></li>
+          <li><a href="https://www.last.fm/user/Julesfr__">Last.fm</a></li>
+          <li><a href="https://steamcommunity.com/profiles/76561199434504564/">Steam</a></li>
+          <li><a href="https://www.tiktok.com/@thatponyjules">TikTok</a></li>
+          <li><a href="https://soundcloud.com/thatponyjules">SoundCloud</a></li>
+        </ul>
+      </section>
+      <section class="sidebar-box" aria-labelledby="interestsHeading">
+        <h2 class="sidebar-box-title" id="interestsHeading">Interests</h2>
+        <div class="interest-grid">
+          <div class="interest-group">
+            <h3>General</h3>
+            <ul><li>My girlfriend</li><li>Art</li><li>Music</li><li>Deer</li><li>Bats</li></ul>
+          </div>
+          <div class="interest-group">
+            <h3>Music</h3>
+            <ul><li>Vylet Pony</li><li>Tracey Brakes</li><li>Ada Rook</li><li>Underscores</li><li>Femtanyl</li><li>Azure Comet</li><li>Ranipla</li><li>Violet_Dash</li><li>5L</li></ul>
+          </div>
+          <div class="interest-group">
+            <h3>Shows</h3>
+            <ul><li>My Little Pony: Friendship Is Magic</li></ul>
+          </div>
+          <div class="interest-group">
+            <h3>Games</h3>
+            <ul><li>Minecraft</li><li>Celeste</li><li>Baldi</li><li>Peak</li><li>Haste</li><li>R.E.P.O.</li><li>Friday Night Funkin'</li><li>Monster Cards</li><li>Portal</li></ul>
+          </div>
+        </div>
+      </section>
+    </section>
+  </aside>
+
+  <script>
+    const USERNAME = "Julesfr__";
+    const BASE_URL = `https://lastfm-last-played.biancarosa.com.br/${USERNAME}/latest-song`;
+    const drawer = document.getElementById("musicDrawer");
+    const toggle = document.getElementById("drawerToggle");
+    const playing = document.getElementById("playing");
+    const songPanel = document.getElementById("songPanel");
+    let currentTrackKey = "";
+
+    songPanel.addEventListener("scroll", () => {
+      songPanel.classList.toggle("is-scrolled", songPanel.scrollTop > 0);
+    }, { passive: true });
+
+    toggle.addEventListener("click", () => {
+      const isOpen = drawer.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", String(isOpen));
+      toggle.setAttribute("aria-label", isOpen ? "Close music sidebar" : "Open music sidebar");
+    });
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+      })[character]);
+    }
+
+    function initializeMarquee(container) {
+      const track = container.querySelector(".marquee-track");
+      const original = track.querySelector(".marquee-item");
+      const overflow = original.scrollWidth > container.clientWidth;
+
+      if (overflow) {
+        const clone = original.cloneNode(true);
+        clone.setAttribute("aria-hidden", "true");
+        clone.querySelectorAll("a").forEach(link => link.setAttribute("tabindex", "-1"));
+        track.appendChild(clone);
+        container.classList.add("is-scrolling");
+        track.style.setProperty("--marquee-duration", `${original.scrollWidth / 32}s`);
+      }
+    }
+
+    function renderTrack(track) {
+      const isPlaying = String(track["@attr"]?.nowplaying).toLowerCase() === "true";
+      const title = track.name || "Unknown track";
+      const artist = track.artist?.["#text"] || "Unknown artist";
+      const image = track.image?.[3]?.["#text"] || track.image?.[2]?.["#text"] || "";
+      const trackKey = JSON.stringify([title, artist, track.url, image]);
+
+      if (trackKey === currentTrackKey) {
+        playing.querySelector(".song-status").dataset.playing = String(isPlaying);
+        playing.querySelector(".status-copy").textContent = isPlaying ? "Now playing" : "Last played";
+        return;
+      }
+
+      currentTrackKey = trackKey;
+      playing.innerHTML = `
+        <article class="song-display sidebar-box">
+          <img class="album-art" src="${escapeHtml(image)}" alt="Album artwork for ${escapeHtml(title)}" />
+          <div class="song-info">
+            <p class="song-status" data-playing="${isPlaying}">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span class="status-copy">${isPlaying ? "Now playing" : "Last played"}</span>
+            </p>
+            <div class="marquee track-title" aria-label="${escapeHtml(title)}">
+              <div class="marquee-track"><span class="marquee-item"><a href="${escapeHtml(track.url || "#")}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)}</a></span></div>
+            </div>
+            <div class="marquee track-artist" aria-label="${escapeHtml(artist)}">
+              <div class="marquee-track"><span class="marquee-item">${escapeHtml(artist)}</span></div>
+            </div>
+          </div>
+        </article>
+      `;
+
+      const imageElement = playing.querySelector(".album-art");
+      imageElement.addEventListener("error", () => { imageElement.hidden = true; }, { once: true });
+      requestAnimationFrame(() => playing.querySelectorAll(".marquee").forEach(initializeMarquee));
+    }
+
+    async function updateTrack() {
+      try {
+        const response = await fetch(BASE_URL, { cache: "no-store" });
+        if (!response.ok) throw new Error(`Last.fm request failed (${response.status})`);
+        const data = await response.json();
+        if (!data.track) throw new Error("No recent track was returned");
+        renderTrack(data.track);
+      } catch (error) {
+        console.error("Unable to load Last.fm track:", error);
+        if (!currentTrackKey) playing.innerHTML = '<p class="loading-message">Song info is unavailable right now.</p>';
+      }
+    }
+
+    updateTrack();
+    window.setInterval(updateTrack, 15000);
+  </script>
+</body>
+</html>

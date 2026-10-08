@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+  @font-face {
+	font-family: DTM;
+	src: url("DTM-Sans.otf");
+}
+@font-face {
+	font-family: DTM;
+	font-weight: bold;
+	src: url("DTM-Sans.otf");
+}
+@font-face {
+	font-family: Frag-Mono;
+	src: url("FragmentMono-Regular.ttf");
+}
+@font-face {
+	font-family: Frag-Mono;
+	font-weight: normal;
+	font-style: italic;
+	src: url("FragmentMono-Italic.ttf");
+}
+
+html {
+	overflow: hidden;
+	height: 100%;
+}
+body {
+	background-image: url("assets/julesbgsite.png"),
+		linear-gradient(#300e3a, #210829);
+	background-size: cover;
+	background-repeat: no-repeat;
+	cursor: url("Cursor.png"), auto;
+	margin: 0;
+	color: white;
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	height: 100%;
+	overflow: auto;
+}
+
+a:hover,
+button:hover {
+	cursor: url("CursorPointer.png"), pointer;
+}
+
+.center {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#rcorners0 {
+	border-radius: 10px;
+	width: 80%;
+	height: auto;
+}
+#rcorners1 {
+	border-radius: 25px;
+	padding: 20px;
+	box-sizing: border-box;
+}
+#rcorners2 {
+	border-radius: 25px;
+	background-color: rgba(173, 170, 255, 0.5);
+	padding: 20px;
+	height: auto;
+}
+#rcorners3 {
+	border-radius: 25px;
+	background-color: rgba(59, 53, 167, 0.75);
+	padding: 10px;
+}
+
+#hitboxidfk {
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+	.stroke {
+		-webkit-text-stroke: 1px black;
+		-webkit-text-fill-color: white;
+	}
+}
+
+.main-seg {
+	margin-left: 30%;
+	margin-right: 30%;
+}
+.main-seg2 {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+.top-bar {
+	margin-top: 30px;
+	margin-right: 15%;
+}
+
+.bottom {
+	height: calc(100% - 70%);
+}
+
+.transpbttn {
+	background-color: transparent;
+	border: none; /* Optional: Remove the border if desired */
+}
+
+/*--------Gallery--------*/
+
+.bb {
+	box-sizing: border-box;
+}
+
+.column {
+	float: left;
+	width: 33.33%;
+	padding: 5px;
+}
+
+/* Clearfix (clear floats) */
+.row::after {
+	content: "";
+	clear: both;
+	display: table;
+}
+
+/*--------Links--------*/
+
+a:link {
+	color: #ffffff;
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	background-color: transparent;
+	text-decoration: none;
+}
+a:visited {
+	color: #ffffff;
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	background-color: transparent;
+	text-decoration: none;
+}
+a:hover {
+	color: #551a8b;
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	background-color: transparent;
+	text-decoration: none;
+}
+a:active {
+	color: #551a8b;
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	background-color: transparent;
+	text-decoration: none;
+}
+
+button {
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	color: white;
+}
+button:hover {
+	font-family: "Frag-Mono", "Courier New", "monospace";
+	color: #551a8b;
+}
+
+/*--------Dropdown Button--------*/
+
+.dropbtn {
+	background-color: #ffffff00;
+	color: white;
+	padding: 16px;
+	font-size: 16px;
+	border: none;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+	direction: rtl;
+}
+
+.dropdown-content {
+	position: absolute;
+	background-color: rgba(173, 170, 255, 0.5);
+	min-width: 160px;
+	height: 35%;
+	z-index: 9999999999;
+	border-radius: 25px;
+	padding: 5px;
+	width: 50%;
+	height: auto;
+}
+
+.dropdown-content a {
+	color: white;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	direction: rtl;
+}
+
+.dropdown-content a:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+	border-radius: 25px;
+	width: 70%;
+	height: auto;
+}
+
+/*.dropdown:hover .dropdown-content {display: block;}*/
+
+.dropdown:hover .dropbtn {
+	background-color: #ffffff50;
+}
+
+/*--------Tooltips--------*/
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: #fff;
+	color: #000;
+	text-align: center;
+	border-radius: 20px;
+
+	/* Position the tooltip */
+	position: absolute;
+	top: 30%;
+	left: 100%;
+	z-index: 9999999999;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+/*----- Splash text ------*/
+/* .splash-container {
+	position: relative;
+}
+.splash-bg {
+	display: block;
+	width: 75%;
+	height: auto;
+}
+
+.splash-text {
+	position: absolute;
+	bottom: 10%;
+	right: 25%;
+	transform-origin: center center;
+	transform: translate(50%, 50%) rotate(-7deg);
+	font-size: 1.1rem;
+	animation: pulse 2s infinite ease-in-out;
+	white-space: nowrap;
+	font-weight: bold;
+	pointer-events: none;
+}
+
+
+@keyframes pulse {
+	0%,
+	100% {
+		transform: translate(50%, 50%) rotate(-7deg) scale(1);
+	}
+	50% {
+		transform: translate(50%, 50%) rotate(-7deg) scale(1.1);
+	}
+} */
+
+</style>
+<style>
+  			/* Sidebar */
+			.sidenav {
+			position: fixed;
+			left: 50px;
+			top: 80px;
+			bottom: 100px;
+			width: 500px;
+			max-height: 98%;
+
+			background-color: #a5a1ff;
+			padding-top: 20px;
+
+			transform: translateX(-550px); /* fully hidden */
+			transition: transform 0.4s ease;
+
+			border-radius: 15px 0px 0px 15px;
+			box-shadow: 0 0 15px rgba(0,0,0,0.5);
+
+			}
+
+			.sidenavcontent {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+
+			overflow-y: auto;
+			overflow-x: hidden;
+
+			padding-top: 20px;
+			direction: rtl;
+			padding-left: 10px;
+			}
+
+			.sidenavcontent::-webkit-scrollbar {
+			width: 8px;
+			}
+
+			.sidenavcontent::-webkit-scrollbar-thumb {
+			background: #e5e4ff;
+			border-radius: 10px;
+			}
+
+			.sidenavcontent::-webkit-scrollbar-track {
+			background: transparent;
+			}
+
+			.sidenavcontent a, p, li {
+			direction: ltr; /* normal text again */
+			}
+
+			.sidenavcontent img {
+			display: block;
+			margin-right: auto; /* pushes it left */
+			}
+
+			/* Open state */
+			.sidenav.open {
+			transform: translateX(0);
+			}
+
+			/* Links */
+			.sidenav a {
+			display: block;
+			}
+
+			/* Tab button that sticks out */
+			.sidenavtoggle {
+			position: absolute;
+			width: 60px;
+			right: -60px;
+			top: 0;
+			bottom: 0;
+			height: 100%;
+			direction: ltr;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			background: #a5a1ff;
+			color: #e5e4ff;
+			padding: 0 10px;       /* horizontal padding only */
+
+			cursor: pointer;
+
+			border-radius: 0 10px 10px 0;
+			}
+
+			.arrow {
+			display: inline-block;
+			transition: transform 0.3s ease;
+			font-size: 20px;
+			}
+
+			/* When sidebar is open, rotate arrow */
+			.sidenav.open .arrow {
+			transform: rotate(180deg);
+			}
+
+</style>
+<style>
+  /* hi change this css */
+#lastfm {
+  background-color: #7c77dd;
+  display: block;
+  width: 90%;
+  height: 220px;
+  border-radius: 10px;
+  padding: 15px; 
+  margin-right: auto;
+}
+
+.lastfm-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#lastfmtext {
+  width: 90%;
+  padding: 10px;
+}
+
+/* Marquee Container */
+.marquee {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 200px;
+}
+
+#trackMarquee {
+  transform: translateY(-10px);
+}
+
+/* Inner sliding track */
+.marquee__track {
+  display: inline-flex;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Inner content block */
+.marquee__content {
+  display: inline-block;
+  flex-shrink: 0; /* Prevents text elements from squishing */
+  padding-right: 40px; /* Space between the repeating texts */
+}
+
+/* Animation trigger */
+.marquee.is-scrolling .marquee__track {
+  animation-name: marquee-content;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes marquee-content {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%); /* Seamlessly slides by exactly 1 item width */
+  }
+} 
+</style>
+</head>
+<body>
+		<div id="mySidenav" class="sidenav">
+			<div class="sidenavtoggle" onclick="toggleNav()">
+				<span class="arrow" style="transform: scaleY(5) scaleX(2) translateX(7px); ">➤</span>
+			</div>
+
+			<div class="sidenavcontent">
+        <span id="playing"></span>
+      </div>
+    </div>
+
+    
+  <script>
+    /*hi change this script*/
+const USERNAME = "Julesfr__";
+const BASE_URL = `https://lastfm-last-played.biancarosa.com.br/${USERNAME}/latest-song`;
+
+function escapeHtml(str) {
+  return str
+    ? str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;")
+    : "";
+}
+
+async function getTrack() {
+  try {
+    const req = await fetch(BASE_URL);
+    const json = await req.json();
+    const track = json.track;
+    const isPlaying = track["@attr"]?.nowplaying || false;
+    const musicstate = isPlaying ? "Listening to" : "Last Listened to";
+
+    const playing = document.getElementById("playing");
+    playing.innerHTML = `
+      <div id="lastfm">
+        <img style="float: left; border-radius: 5px;" width="50%" src="${escapeHtml(track.image[3]["#text"])}"/>
+        <div class="lastfm-row">
+          <div id="lastfmtext" style="padding:15px">
+            <p>${musicstate}</p>
+            <br>
+            <div class="marquee" id="trackMarquee">
+              <div class="marquee__track">
+                <span class="marquee__content">
+                  <a href="${escapeHtml(track.url)}" style="font-size:20px">${escapeHtml(track.name)}</a>
+                </span>
+              </div>
+            </div>
+            <div class="marquee" id="artistMarquee" style="margin-top: 5px;">
+              <div class="marquee__track">
+                <span class="marquee__content" id="artistName">
+                  ${escapeHtml(track.artist["#text"])}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Wait for fonts to finish loading so measuring width is 100% accurate
+    document.fonts.ready.then(() => {
+      initMarquee("trackMarquee");
+      initMarquee("artistMarquee");
+    });
+
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function initMarquee(containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const track = container.querySelector(".marquee__track");
+  const content = container.querySelector(".marquee__content");
+
+  // Clean up previous cloned nodes if getTrack ran again
+  const existingClones = track.querySelectorAll(".marquee__content");
+  if (existingClones.length > 1) {
+    for (let i = 1; i < existingClones.length; i++) {
+      existingClones[i].remove();
+    }
+  }
+
+  // Measure text width vs available box width
+  if (content.offsetWidth > container.clientWidth) {
+    // Clone original content for continuous loop
+    const clone = content.cloneNode(true);
+    track.appendChild(clone);
+
+    // Speed in pixels per second (higher = faster)
+    const pixelsPerSecond =200; 
+    const singleWidth = content.offsetWidth;
+    const duration = singleWidth / pixelsPerSecond;
+
+    track.style.animationDuration = `${duration}s`;
+    container.classList.add("is-scrolling");
+  } else {
+    container.classList.remove("is-scrolling");
+  }
+}
+
+getTrack();
+setInterval(getTrack, 5000);
+
+  </script>
+<!-- Sidenav -- Sidenav -- Sidenav -- Sidenav -- Sidenav -- Sidenav -- Sidenav -- Sidenav -->
+
+		<script>
+			function toggleNav() {
+			document.getElementById("mySidenav").classList.toggle("open");
+			}
+		</script>
+		<script>
+			$(window).on("load", function () {
+				let navscale = screen.availWidth;
+				navscale = navscale * 0.25
+				navscale = navscale - (navscale * 2);
+				navscale += 20;
+				Math.floor(navscale);
+			});
+
+
+							window.addEventListener('resize', updateScale);
+							window.addEventListener('load', updateScale);
+		</script>
+</body>
+</html>
